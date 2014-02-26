@@ -131,6 +131,7 @@ static struct l2_level l2_freq_tbl[] __initdata = {
 	[12] = { { 1026000, HFPLL, 1, 0x26 }, 1150000, 1150000, 5 },
 	[13] = { { 1080000, HFPLL, 1, 0x28 }, 1150000, 1150000, 5 },
 	[14] = { { 1134000, HFPLL, 1, 0x2A }, 1150000, 1150000, 5 },
+	[15] = { { 1188000, HFPLL, 1, 0x2C }, 1150000, 1150000, 5 },
 	{ }
 };
 
@@ -167,18 +168,16 @@ static struct acpu_level tbl_slow[] __initdata = {
 	{ 1, {  1566000, HFPLL, 1, 0x3A }, L2(14), 1250000 },
 	{ 1, {  1674000, HFPLL, 1, 0x3E }, L2(14), 1250000 },
 	{ 1, {  1728000, HFPLL, 1, 0x40 }, L2(14), 1275000 },
-	{ 1, {  1836000, HFPLL, 1, 0x44 }, L2(15), 1287500 },
-	//{ 1, {  1890000, HFPLL, 1, 0x46 }, L2(14), 1287500 },
-	//{ 1, {  1944000, HFPLL, 1, 0x48 }, L2(14), 1300000 },
-	//{ 1, {  2160000, HFPLL, 1, 0x50 }, L2(14), 1300000 },
-	
+	{ 1, {  1782000, HFPLL, 1, 0x42 }, L2(14), 1275000 },
+	{ 1, {  1836000, HFPLL, 1, 0x44 }, L2(15), 1275000 },
+	{ 1, {  1890000, HFPLL, 1, 0x46 }, L2(15), 1275000 },
 	{ 0, { 0 } }
 };
 
 static struct acpu_level tbl_nom[] __initdata = {
 	{ 1, {   162000, HFPLL, 2, 0x0C }, L2(0),   925000 },
-        { 1, {	 175500, HFPLL, 2, 0x0D }, L2(0),   925000 },
-        { 1, {	 189000, HFPLL, 2, 0x0E }, L2(0),   925000 },	
+    { 1, {	 175500, HFPLL, 2, 0x0D }, L2(0),   925000 },
+    { 1, {	 189000, HFPLL, 2, 0x0E }, L2(0),   925000 },	
 	{ 1, {	 216000, HFPLL, 2, 0x10 }, L2(0),   925000 },
 	{ 1, { 	 270000, HFPLL, 2, 0x14 }, L2(0),   925000 },
 	{ 1, {   324000, HFPLL, 2, 0x18 }, L2(0),   900000 },
@@ -208,18 +207,16 @@ static struct acpu_level tbl_nom[] __initdata = {
 	{ 1, {  1566000, HFPLL, 1, 0x3A }, L2(14), 1200000 },
 	{ 1, {  1674000, HFPLL, 1, 0x3E }, L2(14), 1225000 },
 	{ 1, {  1728000, HFPLL, 1, 0x40 }, L2(14), 1225000 },
+	{ 1, {  1782000, HFPLL, 1, 0x42 }, L2(14), 1225000 },
 	{ 1, {  1836000, HFPLL, 1, 0x44 }, L2(15), 1250000 },
-	//{ 1, {  1890000, HFPLL, 1, 0x46 }, L2(14), 1287500 },
-      //  { 1, {  1917000, HFPLL, 1, 0x47 }, L2(15), 1300000 },
-	//{ 1, {  1944000, HFPLL, 1, 0x48 }, L2(14), 1300000 },
-	//{ 1, {  2160000, HFPLL, 1, 0x50 }, L2(14), 1300000 },
+	{ 1, {  1890000, HFPLL, 1, 0x46 }, L2(15), 1250000 },
 	{ 0, { 0 } }
 };
 
 static struct acpu_level tbl_fast[] __initdata = {
 	{ 1, {   162000, HFPLL, 2, 0x0C }, L2(0),   875000 },
-        { 1, {	 175500, HFPLL, 2, 0x0D }, L2(0),   875000 },
-        { 1, {	 189000, HFPLL, 2, 0x0E }, L2(0),   875000 },	
+    { 1, {	 175500, HFPLL, 2, 0x0D }, L2(0),   875000 },
+    { 1, {	 189000, HFPLL, 2, 0x0E }, L2(0),   875000 },	
 	{ 1, {	 216000, HFPLL, 2, 0x10 }, L2(0),   850000 },
 	{ 1, { 	 270000, HFPLL, 2, 0x14 }, L2(0),   850000 },
 	{ 1, {   324000, HFPLL, 2, 0x18 }, L2(0),   850000 },
@@ -249,18 +246,16 @@ static struct acpu_level tbl_fast[] __initdata = {
 	{ 1, {  1566000, HFPLL, 1, 0x3A }, L2(14), 1150000 },
 	{ 1, {  1674000, HFPLL, 1, 0x3E }, L2(14), 1187500 },
 	{ 1, {  1728000, HFPLL, 1, 0x40 }, L2(14), 1200000 },
+	{ 1, {  1782000, HFPLL, 1, 0x42 }, L2(14), 1225000 },
 	{ 1, {  1836000, HFPLL, 1, 0x44 }, L2(15), 1250000 },
-	//{ 1, {  1890000, HFPLL, 1, 0x46 }, L2(14), 1287500 },
-	//{ 1, {  1917000, HFPLL, 1, 0x47 }, L2(15), 1300000 },
-	//{ 1, {  1944000, HFPLL, 1, 0x48 }, L2(14), 1300000 },
-	//{ 1, {  2160000, HFPLL, 1, 0x50 }, L2(14), 1300000 },
+	{ 1, {  1890000, HFPLL, 1, 0x46 }, L2(15), 1250000 },
 	{ 0, { 0 } }
 };
 
 static struct acpu_level tbl_faster[] __initdata = {
 	{ 1, {   162000, HFPLL, 2, 0x0C }, L2(0),   875000 },
-        { 1, {	 175500, HFPLL, 2, 0x0D }, L2(0),   875000 },
-        { 1, {	 189000, HFPLL, 2, 0x0E }, L2(0),   875000 },	
+    { 1, {	 175500, HFPLL, 2, 0x0D }, L2(0),   875000 },
+    { 1, {	 189000, HFPLL, 2, 0x0E }, L2(0),   875000 },	
 	{ 1, {	 216000, HFPLL, 2, 0x10 }, L2(0),   875000 },
 	{ 1, { 	 270000, HFPLL, 2, 0x14 }, L2(0),   875000 },
 	{ 1, {   324000, HFPLL, 2, 0x18 }, L2(0),   875000 },
@@ -290,11 +285,9 @@ static struct acpu_level tbl_faster[] __initdata = {
 	{ 1, {  1566000, HFPLL, 1, 0x3A }, L2(14), 1150000 },
 	{ 1, {  1674000, HFPLL, 1, 0x3E }, L2(14), 1187500 },
 	{ 1, {  1728000, HFPLL, 1, 0x40 }, L2(14), 1200000 },
+	{ 1, {  1782000, HFPLL, 1, 0x42 }, L2(14), 1225000 },
 	{ 1, {  1836000, HFPLL, 1, 0x44 }, L2(15), 1250000 },
-	//{ 1, {  1890000, HFPLL, 1, 0x46 }, L2(14), 1287500 },
-	//{ 1, {  1917000, HFPLL, 1, 0x47 }, L2(15), 1300000 },
-	//{ 1, {  1944000, HFPLL, 1, 0x48 }, L2(14), 1300000 },
-	//{ 1, {  2160000, HFPLL, 1, 0x50 }, L2(14), 1300000 },
+	{ 1, {  1890000, HFPLL, 1, 0x46 }, L2(15), 1250000 },
 	{ 0, { 0 } }
 };
 
@@ -592,57 +585,6 @@ static struct acpuclk_krait_params acpuclk_8064_params __initdata = {
 	.stby_khz = 384000,
 };
 
-#ifdef CONFIG_PERFLOCK
-unsigned msm8064_perf_acpu_table[] = {
-	594000000, 
-	810000000, 
-	1026000000,
-	1134000000,
-	1512000000, 
-};
-
-static struct perflock_data msm8064_floor_data = {
-	.perf_acpu_table = msm8064_perf_acpu_table,
-	.table_size = ARRAY_SIZE(msm8064_perf_acpu_table),
-};
-
-static struct perflock_data msm8064_cpufreq_ceiling_data = {
-	.perf_acpu_table = msm8064_perf_acpu_table,
-	.table_size = ARRAY_SIZE(msm8064_perf_acpu_table),
-};
-
-static struct perflock_pdata perflock_pdata = {
-	.perf_floor = &msm8064_floor_data,
-	.perf_ceiling = &msm8064_cpufreq_ceiling_data,
-};
-
-struct platform_device msm8064_device_perf_lock = {
-	.name = "perf_lock",
-	.id = -1,
-	.dev = {
-		.platform_data = &perflock_pdata,
-	},
-};
-
-extern uint32_t __init msm_get_cpu_speed_bin(void);
-static void __init perftable_fix_up(void)
-{
-	uint32_t speed;
-	speed = msm_get_cpu_speed_bin();
-	
-	if(speed == 0)
-		msm8064_perf_acpu_table[PERF_LOCK_HIGHEST] = 1512000000;
-	
-	else if(speed == 1)
-		msm8064_perf_acpu_table[PERF_LOCK_HIGHEST] = 1566000000;
-	
-	else if(speed == 2)
-		msm8064_perf_acpu_table[PERF_LOCK_HIGHEST] = 1566000000;
-	
-	else
-		msm8064_perf_acpu_table[PERF_LOCK_HIGHEST] = 1512000000;
-}
-#endif
 
 static int __init acpuclk_8064_probe(struct platform_device *pdev)
 {
@@ -654,11 +596,6 @@ static int __init acpuclk_8064_probe(struct platform_device *pdev)
 	}
 
 	ret = acpuclk_krait_init(&pdev->dev, &acpuclk_8064_params);
-
-#ifdef CONFIG_PERFLOCK
-		if (!ret)
-			perftable_fix_up();
-#endif
 	return ret;
 }
 
