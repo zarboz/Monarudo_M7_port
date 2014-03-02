@@ -12,11 +12,11 @@ do
     if [ -r $Fwhich ]
     then
         s2w=`cat $Fwhich`
-        for button in startbutton endbutton
-        do
+#        for button in startbutton endbutton
+#        do
             echo $s2w > "$S2W$button"
             echo "Setings $S2W$button to $s2w"
-        done
+#        done
     else
         echo "Leaving $S2W$button alone"
     fi    
