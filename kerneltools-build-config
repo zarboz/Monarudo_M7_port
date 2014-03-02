@@ -1,0 +1,23 @@
+CROSS_COMPILE=~/android/toolchains/android-toolchain-4.8.3/bin/arm-eabi-
+HOST_CC=gcc
+LOCAL_BUILD_DIR=dna
+TARGET_DIR=~/android/kernel/dna/out
+SYSTEM_PARTITION="/dev/block/mmcblk0p32"
+DEFCONFIG=torrented_defconfig
+
+FLASH_BOOT='write_raw_image("/tmp/boot.img", "boot")'
+
+# ----
+
+N_CORES=2
+VERSION=torrented-beta_0.1.0_KHbP
+
+# ----
+
+BANNER=`cat <<EOF
+ui_print("**********************************************");
+ui_print("*                                            *");
+ui_print("  VERSION: $VERSION                           ");
+ui_print("*                                            *");
+ui_print("**********************************************");
+EOF`
