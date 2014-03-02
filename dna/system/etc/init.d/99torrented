@@ -9,6 +9,6 @@ then
 $script
    done
 else
-   echo "!! torrented's boot configuration not running, this isn't my kernel !!"
+   echo "!! torrented's Sweep2Wake configuration not running, this isn't my kernel !!"
 fi
 )2>&1 | tee /sdcard/torrented.log
