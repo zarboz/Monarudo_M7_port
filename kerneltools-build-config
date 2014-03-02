@@ -10,7 +10,7 @@ FLASH_BOOT='write_raw_image("/tmp/boot.img", "boot")'
 # ----
 
 N_CORES=2
-VERSION=torrented-beta_0.1.0_KHbP
+VERSION=torrented-beta_0.1.3
 
 # ----
 
