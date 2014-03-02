@@ -2641,7 +2641,7 @@ static void synaptics_ts_finger_func(struct synaptics_ts_data *ts)
 				printk(KERN_INFO "[TP] Finger leave\n");
 #ifdef CONFIG_TOUCHSCREEN_SYNAPTICS_SWEEP2WAKE
 				/* if finger released, reset count & barriers */
-				if ((((ts->finger_count > 0)?1:0) == 0) && (s2w_switch > 0 && dt2w_switch > 0)) {
+				if ((((ts->finger_count > 0)?1:0) == 0) && (s2w_switch > 0 || dt2w_switch > 0)) {
 					if ((s2w_switch == 2) &&
 			    	(scr_suspended == true) &&
 			    	(led_exec_count == false) &&
