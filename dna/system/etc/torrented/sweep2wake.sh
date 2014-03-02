@@ -12,11 +12,8 @@ do
     if [ -r $Fwhich ]
     then
         s2w=`cat $Fwhich`
-#        for button in startbutton endbutton
-#        do
-            echo $s2w > "$S2W$which""button"
-            echo "Setings $S2W$which""button to $s2w"
-#        done
+        echo $s2w > "$S2W$which""button"
+        echo "Setings $S2W$which""button to $s2w"
     else
         echo "Leaving $S2W$which""button alone"
     fi    
