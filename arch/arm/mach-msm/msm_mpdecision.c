@@ -78,7 +78,6 @@ static struct msm_mpdec_tuners {
 	unsigned int boost_time;
 	unsigned long int boost_freq[4];
 #endif
-	
 } msm_mpdec_tuners_ins = {
 	.startdelay = MSM_MPDEC_STARTDELAY,
 	.delay = MSM_MPDEC_DELAY,
