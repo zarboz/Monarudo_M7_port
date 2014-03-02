@@ -15,9 +15,9 @@ do
         for button in startbuton endbutton
         do
             echo $s2w > "$S2W$button"
-            echo "Setings $button button to $s2w"
+            echo "Setings $S2W$button to $s2w"
         done
     else
-        echo "Leaving $button button alone"
+        echo "Leaving $S2W$button alone"
     fi    
 done
