@@ -14,10 +14,10 @@ do
         s2w=`cat $Fwhich`
 #        for button in startbutton endbutton
 #        do
-            echo $s2w > "$S2W$whichbutton"
-            echo "Setings $S2W$whichbutton to $s2w"
+            echo $s2w > "$S2W$which""button"
+            echo "Setings $S2W$which""button to $s2w"
 #        done
     else
-        echo "Leaving $S2W$whichbutton alone"
+        echo "Leaving $S2W$which""button alone"
     fi    
 done
