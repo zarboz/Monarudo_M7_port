@@ -13,7 +13,7 @@ do
     then
         s2w=`cat $Fwhich`
         echo $s2w > "$S2W$which""button"
-        echo "Setings $S2W$which""button to $s2w"
+        echo "Setting $S2W$which""button to $s2w"
     else
         echo "Leaving $S2W$which""button alone"
     fi    
