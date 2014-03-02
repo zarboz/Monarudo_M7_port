@@ -6,7 +6,7 @@ S2W=/sys/android_touch/sweep2wake_
 echo "Enabling Sweep2Wake"
 echo 1 > /sys/android_touch/sweep2wake
 
-for which in start stop
+for which in start end
 do
     Fwhich=$F"$which"
     if [ -r $Fwhich ]
