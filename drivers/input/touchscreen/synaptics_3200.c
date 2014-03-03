@@ -2877,7 +2877,7 @@ static void synaptics_ts_finger_func(struct synaptics_ts_data *ts)
 					    (finger_data[i][0] > barrier1) &&
 					    (finger_data[i][1] > 2725))) {
 						barrier[1] = true;
-						if ((finger_data[i][0] < barrier2) &&
+						if ((finger_data[i][0] < barrier1) &&
 						    (finger_data[i][1] > 2725)) {
 							if (exec_count) {
 								printk(KERN_INFO "[SWEEP2WAKE]: POWER OFF.\n");
