@@ -209,11 +209,11 @@ static struct acpu_level tbl_nom[] __initdata = {
 	{ 0, {  1404000, HFPLL, 1, 0x34 }, L2(16), 1187500 },
 	{ 1, {  1458000, HFPLL, 1, 0x36 }, L2(16), 1187500 },
 	{ 1, {  1512000, HFPLL, 1, 0x38 }, L2(16), 1200000 },
-	{ 1, {  1566000, HFPLL, 1, 0x3A }, L2(16), 1200000 },
-	{ 1, {  1674000, HFPLL, 1, 0x3E }, L2(16), 1225000 },
-	{ 1, {  1728000, HFPLL, 1, 0x40 }, L2(17), 1225000 },
-	{ 1, {  1782000, HFPLL, 1, 0x42 }, L2(17), 1225000 },
-	{ 1, {  1836000, HFPLL, 1, 0x44 }, L2(17), 1250000 },
+	{ 1, {  1566000, HFPLL, 1, 0x3A }, L2(16), 1150000 },
+	{ 1, {  1674000, HFPLL, 1, 0x3E }, L2(16), 1187500 },
+	{ 1, {  1728000, HFPLL, 1, 0x40 }, L2(18), 1200000 },
+	{ 1, {  1782000, HFPLL, 1, 0x42 }, L2(18), 1225000 },
+	{ 1, {  1836000, HFPLL, 1, 0x44 }, L2(18), 1262500 },
 	{ 0, { 0 } }
 };
 
@@ -614,3 +614,45 @@ static int __init acpuclk_8064_init(void)
 				     acpuclk_8064_probe);
 }
 device_initcall(acpuclk_8064_init);
+#ifdef CONFIG_CMDLINE_OPTIONS
+uint32_t __init acpu_check_khz_value(unsigned long khz)
+{
+	struct acpu_level *f;
+
+	if (khz > 1836000)
+		return CONFIG_MSM_CPU_FREQ_MAX;
+
+	if (khz < 192000)
+		return CONFIG_MSM_CPU_FREQ_MIN;
+
+	for (f = tbl_slow,tbl_nom,tbl_fast,tbl_faster; f->speed.khz != 0; f++) {
+		if (khz < 192000) {
+			if (f->speed.khz == (khz*1000))
+				return f->speed.khz;
+			if ((khz*1000) > f->speed.khz) {
+				f++;
+				if ((khz*1000) < f->speed.khz) {
+					f--;
+					return f->speed.khz;
+				}
+				f--;
+			}
+		}
+		if (f->speed.khz == khz) {
+			return 1;
+		}
+		if (khz > f->speed.khz) {
+			f++;
+			if (khz < f->speed.khz) {
+				f--;
+				return f->speed.khz;
+			}
+			f--;
+		}
+	}
+
+	return 0;
+}
+EXPORT_SYMBOL(acpu_check_khz_value);
+/* end cmdline_khz */
+#endif

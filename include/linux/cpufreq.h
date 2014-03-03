@@ -34,6 +34,7 @@ extern bool cmdline_scroff;
 
 /* check_khz function for cmdline khz parameters */
 extern uint32_t acpu_check_khz_value(unsigned long khz);
+
 #endif
 
 
