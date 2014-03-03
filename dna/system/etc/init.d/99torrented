@@ -3,12 +3,12 @@
 (
 if grep torrented /proc/version > /dev/null
 then
-   echo "** torrented's Sweep2Wake configuration:"
+   echo "** torrented's boot configuration:"
    for script in /system/etc/torrented/*
    do
 $script
    done
 else
-   echo "!! torrented's Sweep2Wake configuration not running, this isn't my kernel !!"
+   echo "!! torrented's boot configuration not running, this isn't my kernel !!"
 fi
 )2>&1 | tee /sdcard/torrented.log
