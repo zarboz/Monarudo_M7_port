@@ -2141,9 +2141,9 @@ static ssize_t synaptic_sweep2wake_startbutton_dump(struct device *dev,
 	} else 
 		s2w_startbutton = s2w_tempbutton;
 
-	barrier1 = s2w_startbutton - 100; //0;
-	barrier2 = ((s2w_endbutton - s2w_startbutton) / 2) + s2w_startbutton; //540;
-	barrier3 = s2w_endbutton + 100; //1000;
+	barrier1 = s2w_startbutton; 
+	barrier2 = (s2w_endbutton - s2w_startbutton); 
+	barrier3 = s2w_endbutton;
 
 	return count;
 }
@@ -2192,9 +2192,9 @@ static ssize_t synaptic_sweep2wake_endbutton_dump(struct device *dev,
 	} else 
 		s2w_endbutton = s2w_tempbutton;
 
-	barrier1 = s2w_startbutton - 100; //0;
-	barrier2 = ((s2w_endbutton - s2w_startbutton) / 2) + s2w_startbutton; //540;
-	barrier3 = s2w_endbutton + 100; //1000;
+	barrier1 = s2w_startbutton; 
+	barrier2 = (s2w_endbutton - s2w_startbutton); 
+	barrier3 = s2w_endbutton;
 
 	return count;
 }
@@ -2877,7 +2877,7 @@ static void synaptics_ts_finger_func(struct synaptics_ts_data *ts)
 					    (finger_data[i][0] > barrier1) &&
 					    (finger_data[i][1] > 2725))) {
 						barrier[1] = true;
-						if ((finger_data[i][0] < barrier2) &&
+						if ((finger_data[i][0] < barrier1) &&
 						    (finger_data[i][1] > 2725)) {
 							if (exec_count) {
 								printk(KERN_INFO "[SWEEP2WAKE]: POWER OFF.\n");
@@ -3874,9 +3874,9 @@ static int syn_probe_init(void *arg)
 		s2w_endbutton = sweep2wake_buttonset(CONFIG_TOUCHSCREEN_SYNAPTICS_SWEEP2WAKE_END);
 #endif 
 
-	barrier1 = s2w_startbutton - 100; //0;
-	barrier2 = ((s2w_endbutton - s2w_startbutton) / 2) + s2w_startbutton; //540;
-	barrier3 = s2w_endbutton + 100; //1000;
+	barrier1 = s2w_startbutton; 
+	barrier2 = (s2w_endbutton - s2w_startbutton); 
+	barrier3 = s2w_endbutton; 
 #endif
 	printk(KERN_INFO "[TP] synaptics_ts_probe: Start touchscreen %s in %s mode\n", ts->input_dev->name, ts->use_irq ? "interrupt" : "polling");
 
