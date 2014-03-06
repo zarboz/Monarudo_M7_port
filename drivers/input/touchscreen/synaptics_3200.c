@@ -210,6 +210,12 @@ static void syn_handle_block_touch(struct synaptics_ts_data *ts, int enable)
 
 
 #ifdef CONFIG_TOUCHSCREEN_SYNAPTICS_SWEEP2WAKE
+#define S2W_Y_MAX               1920
+#define S2W_X_MAX               1080
+#define S2W_Y_LIMIT             S2W_Y_MAX-130
+#define S2W_X_B1                400
+#define S2W_X_B2                700
+#define S2W_X_FINAL             250
 static int pocket_detect = 1;
 int s2w_switch = 1;
 int s2w_temp = 1;
@@ -218,6 +224,7 @@ bool exec_count = true, s2w_switch_changed = false;;
 bool scr_on_touch = false, led_exec_count = false, barrier[2] = {false, false};
 
 int barrier1 = 0, barrier2 = 0, barrier3 = 0;
+int prevx = 0, nextx = 0;
 
 typedef struct {
 	int	x;
@@ -2834,28 +2841,35 @@ static void synaptics_ts_finger_func(struct synaptics_ts_data *ts)
 //			printk(KERN_INFO "[SWEEP2WAKE_DEBUG]: TOUCH at x = %d\n", finger_data[i][0]);
 			//left -> right
 			if ((s2w_switch > 0) && (scr_suspended == true) && (ts->finger_count == 1)) {
-				if ((barrier[0] == true) ||
-				   ((finger_data[i][0] > barrier1) &&
-				    (finger_data[i][0] < barrier2) &&
-				    (finger_data[i][1] > 2725))) {
+				prevx = 0;
+		                nextx = S2W_X_B1;
+	                        if ((barrier[0] == true) ||
+		                   ((finger_data[i][0] > prevx) &&
+		                    (finger_data[i][0] < nextx) &&
+		                    (finger_data[i][1] > 0))) {
 					if ((led_exec_count == true) && (scr_on_touch == false) && (s2w_switch == 2)) {
  						pm8xxx_led_current_set(sweep2wake_leddev, 255);
 						printk(KERN_INFO "[SWEEP2WAKE]: activated button backlight.\n");
 						led_exec_count = false;
 					}
-					barrier[0] = true;
-					if ((barrier[1] == true) ||
-					   ((finger_data[i][0] > barrier2) &&
-					    (finger_data[i][0] < barrier3) &&
-					    (finger_data[i][1] > 2725))) {
+					prevx = nextx;
+			                nextx = S2W_X_B2;
+			                barrier[0] = true;
+			                if ((barrier[1] == true) ||
+			                   ((finger_data[i][0] > prevx) &&
+			                    (finger_data[i][0] < nextx) &&
+			                    (finger_data[i][1] > 0))) {
+                                                prevx = nextx;
 						barrier[1] = true;
-						if ((finger_data[i][0] > barrier3) &&
-						    (finger_data[i][1] > 2725)) {
-							if (exec_count) {
+						if ((finger_data[i][0] > prevx) &&
+						    (finger_data[i][1] > 0)) {
+							if (finger_data[i][0] > (S2W_X_MAX - S2W_X_FINAL)) {
+                                                                if (exec_count) {
 								printk(KERN_INFO "[SWEEP2WAKE]: POWER ON.\n");
 								sweep2wake_pwrtrigger();
 								exec_count = false;
 								break;
+                                                                }
 							}
 						}
 					}
@@ -2863,23 +2877,30 @@ static void synaptics_ts_finger_func(struct synaptics_ts_data *ts)
 			//right -> left
 			} else if ((s2w_switch > 0) && (scr_suspended == false) && (ts->finger_count == 1)) {
 				scr_on_touch=true;
+                                prevx = (S2W_X_MAX - S2W_X_FINAL);
+		                nextx = S2W_X_B2;
 				if ((barrier[0] == true) ||
-				   ((finger_data[i][0] < barrier3) &&
-			    	    (finger_data[i][0] > barrier2) &&
-				    (finger_data[i][1] > 2725))) {
+				   ((finger_data[i][0] < prevx) &&
+			    	    (finger_data[i][0] > nextx) &&
+				    (finger_data[i][1] > S2W_Y_LIMIT))) {
+                                        prevx = nextx;
+			                nextx = S2W_X_B1;
 					barrier[0] = true;
 					if ((barrier[1] == true) ||
-					   ((finger_data[i][0] < barrier2) &&
-					    (finger_data[i][0] > barrier1) &&
-					    (finger_data[i][1] > 2725))) {
+					   ((finger_data[i][0] < prevx) &&
+					    (finger_data[i][0] > nextx) &&
+					    (finger_data[i][1] > S2W_Y_LIMIT))) {
+                                                prevx = nextx;
 						barrier[1] = true;
-						if ((finger_data[i][0] < barrier1) &&
-						    (finger_data[i][1] > 2725)) {
-							if (exec_count) {
-								printk(KERN_INFO "[SWEEP2WAKE]: POWER OFF.\n");
-								sweep2wake_pwrtrigger();
-								exec_count = false;
-								break;
+						if ((finger_data[i][0] < prevx) &&
+						    (finger_data[i][1] > S2W_Y_LIMIT)) {
+                                                        if (finger_data[i][0] < S2W_X_FINAL) {
+							        if (exec_count) {
+								    printk(KERN_INFO "[SWEEP2WAKE]: POWER OFF.\n");
+								    sweep2wake_pwrtrigger();
+								    exec_count = false;
+							       	    break;
+                                                                }
 							}
 						}
 					}
