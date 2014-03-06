@@ -2882,18 +2882,18 @@ static void synaptics_ts_finger_func(struct synaptics_ts_data *ts)
 				if ((barrier[0] == true) ||
 				   ((finger_data[i][0] < prevx) &&
 			    	    (finger_data[i][0] > nextx) &&
-				    (finger_data[i][1] > S2W_Y_LIMIT))) {
+				    (finger_data[i][1] > 2725))) {
                                         prevx = nextx;
 			                nextx = S2W_X_B1;
 					barrier[0] = true;
 					if ((barrier[1] == true) ||
 					   ((finger_data[i][0] < prevx) &&
 					    (finger_data[i][0] > nextx) &&
-					    (finger_data[i][1] > S2W_Y_LIMIT))) {
+					    (finger_data[i][1] > 2725))) {
                                                 prevx = nextx;
 						barrier[1] = true;
 						if ((finger_data[i][0] < prevx) &&
-						    (finger_data[i][1] > S2W_Y_LIMIT)) {
+						    (finger_data[i][1] > 2725)) {
                                                         if (finger_data[i][0] < S2W_X_FINAL) {
 							        if (exec_count) {
 								    printk(KERN_INFO "[SWEEP2WAKE]: POWER OFF.\n");
