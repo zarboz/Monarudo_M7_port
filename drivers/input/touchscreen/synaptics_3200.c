@@ -210,10 +210,6 @@ static void syn_handle_block_touch(struct synaptics_ts_data *ts, int enable)
 
 
 #ifdef CONFIG_TOUCHSCREEN_SYNAPTICS_SWEEP2WAKE
-// #define BACK_BUTTON		180
-// #define HOME_BUTTON		500
-// #define MENU_BUTTON		900
-
 static int pocket_detect = 1;
 int s2w_switch = 1;
 int s2w_temp = 1;
@@ -230,8 +226,8 @@ typedef struct {
 
 static button buttons[] = {
 			{180, "BACK"},			
-			{500, "HOME"},
-			{900, "MENU"},
+			{540, "HOME"},
+			{880, "MENU"},
 };
 
 int s2w_startbutton = -1;
