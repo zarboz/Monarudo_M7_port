@@ -212,10 +212,10 @@ static void syn_handle_block_touch(struct synaptics_ts_data *ts, int enable)
 #ifdef CONFIG_TOUCHSCREEN_SYNAPTICS_SWEEP2WAKE
 #define S2W_Y_MAX               1920
 #define S2W_X_MAX               1080
-#define S2W_Y_LIMIT             S2W_Y_MAX-130
-#define S2W_X_B1                400
-#define S2W_X_B2                700
-#define S2W_X_FINAL             250
+#define S2W_Y_LIMIT             1880
+#define S2W_X_B1                170
+#define S2W_X_B2                910
+#define S2W_X_FINAL             100
 static int pocket_detect = 1;
 int s2w_switch = 1;
 int s2w_temp = 1;
