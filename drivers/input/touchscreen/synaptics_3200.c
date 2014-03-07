@@ -2865,10 +2865,10 @@ static void synaptics_ts_finger_func(struct synaptics_ts_data *ts)
 						    (finger_data[i][1] > 0)) {
 							if (finger_data[i][0] > (S2W_X_MAX - S2W_X_FINAL)) {
                                                                 if (exec_count) {
-								printk(KERN_INFO "[SWEEP2WAKE]: POWER ON.\n");
-								sweep2wake_pwrtrigger();
-								exec_count = false;
-								break;
+								    printk(KERN_INFO "[SWEEP2WAKE]: POWER ON.\n");
+								    sweep2wake_pwrtrigger();
+								    exec_count = false;
+								    break;
                                                                 }
 							}
 						}
