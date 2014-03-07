@@ -193,12 +193,7 @@ static void check_temp(struct work_struct *work)
             if (pre_throttled_max != 0)
                 max_freq = pre_throttled_max;
             else {
-#ifdef CONFIG_MSM_CPU_FREQ_DEFAULT_MAX
-                max_freq = CONFIG_MSM_CPU_FREQ_DEFAULT_MAX;
-#endif
-#ifdef CONFIG_MSM_CPU_FREQ_MAX
                 max_freq = CONFIG_MSM_CPU_FREQ_MAX;
-#endif
                 pr_warn("msm_thermal: ERROR! pre_throttled_max=0, falling back to %u\n", max_freq);
             }
             update_policy = true;
@@ -636,4 +631,3 @@ int __init msm_thermal_init(struct msm_thermal_data *pdata)
 
     return ret;
 }
-
