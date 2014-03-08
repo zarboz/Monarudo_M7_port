@@ -2210,6 +2210,8 @@ static DEVICE_ATTR(sweep2wake_endbutton, (S_IWUSR|S_IRUGO),
 
 #endif
 
+#ifdef CONFIG_TOUCHSCREEN_DOUBLETAP2WAKE
+
 static ssize_t dt2w_doubletap2wake_show(struct device *dev,
 		struct device_attribute *attr, char *buf)
 {
@@ -2252,6 +2254,7 @@ static ssize_t dt2w_version_dump(struct device *dev,
 static DEVICE_ATTR(doubletap2wake_version, (S_IWUSR|S_IRUGO),
 	dt2w_version_show, dt2w_version_dump);
 
+#endif
 
 static struct kobject *android_touch_kobj;
 
