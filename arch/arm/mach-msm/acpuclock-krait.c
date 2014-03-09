@@ -60,9 +60,7 @@ static void set_acpuclk_L2_freq_foot_print(unsigned khz)
 	mb();
 }
 
-#ifdef CONFIG_ACPU_CUSTOM_FREQ_SUPPORT
-static unsigned long acpu_max_freq = CONFIG_ACPU_MAX_FREQ;
-#endif
+
 
 #define PRI_SRC_SEL_SEC_SRC	0
 #define PRI_SRC_SEL_HFPLL	1

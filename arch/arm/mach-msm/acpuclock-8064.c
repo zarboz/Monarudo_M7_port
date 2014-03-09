@@ -105,7 +105,6 @@ static struct msm_bus_paths bw_level_tbl[] __initdata = {
 	[2] = BW_MBPS(1600), 
 	[3] = BW_MBPS(2128), 
 	[4] = BW_MBPS(3200), 
-	[5] = BW_MBPS(4264), 
 };
 
 static struct msm_bus_scale_pdata bus_scale_data __initdata = {
@@ -169,8 +168,8 @@ static struct acpu_level tbl_slow[] __initdata = {
 	{ 1, {  1674000, HFPLL, 1, 0x3E }, L2(14), 1250000 },
 	{ 1, {  1728000, HFPLL, 1, 0x40 }, L2(14), 1275000 },
 	{ 1, {  1782000, HFPLL, 1, 0x42 }, L2(14), 1275000 },
-	{ 1, {  1836000, HFPLL, 1, 0x44 }, L2(15), 1275000 },
-	{ 1, {  1890000, HFPLL, 1, 0x46 }, L2(15), 1275000 },
+//	{ 1, {  1836000, HFPLL, 1, 0x44 }, L2(15), 1275000 },
+//	{ 1, {  1890000, HFPLL, 1, 0x46 }, L2(15), 1275000 },
 	{ 0, { 0 } }
 };
 
@@ -208,8 +207,8 @@ static struct acpu_level tbl_nom[] __initdata = {
 	{ 1, {  1674000, HFPLL, 1, 0x3E }, L2(14), 1225000 },
 	{ 1, {  1728000, HFPLL, 1, 0x40 }, L2(14), 1225000 },
 	{ 1, {  1782000, HFPLL, 1, 0x42 }, L2(14), 1225000 },
-	{ 1, {  1836000, HFPLL, 1, 0x44 }, L2(15), 1250000 },
-	{ 1, {  1890000, HFPLL, 1, 0x46 }, L2(15), 1250000 },
+//	{ 1, {  1836000, HFPLL, 1, 0x44 }, L2(15), 1250000 },
+//	{ 1, {  1890000, HFPLL, 1, 0x46 }, L2(15), 1250000 },
 	{ 0, { 0 } }
 };
 
@@ -247,8 +246,8 @@ static struct acpu_level tbl_fast[] __initdata = {
 	{ 1, {  1674000, HFPLL, 1, 0x3E }, L2(14), 1187500 },
 	{ 1, {  1728000, HFPLL, 1, 0x40 }, L2(14), 1200000 },
 	{ 1, {  1782000, HFPLL, 1, 0x42 }, L2(14), 1225000 },
-	{ 1, {  1836000, HFPLL, 1, 0x44 }, L2(15), 1250000 },
-	{ 1, {  1890000, HFPLL, 1, 0x46 }, L2(15), 1250000 },
+//	{ 1, {  1836000, HFPLL, 1, 0x44 }, L2(15), 1250000 },
+//	{ 1, {  1890000, HFPLL, 1, 0x46 }, L2(15), 1250000 },
 	{ 0, { 0 } }
 };
 
@@ -286,8 +285,8 @@ static struct acpu_level tbl_faster[] __initdata = {
 	{ 1, {  1674000, HFPLL, 1, 0x3E }, L2(14), 1187500 },
 	{ 1, {  1728000, HFPLL, 1, 0x40 }, L2(14), 1200000 },
 	{ 1, {  1782000, HFPLL, 1, 0x42 }, L2(14), 1225000 },
-	{ 1, {  1836000, HFPLL, 1, 0x44 }, L2(15), 1250000 },
-	{ 1, {  1890000, HFPLL, 1, 0x46 }, L2(15), 1250000 },
+//	{ 1, {  1836000, HFPLL, 1, 0x44 }, L2(15), 1250000 },
+//	{ 1, {  1890000, HFPLL, 1, 0x46 }, L2(15), 1250000 },
 	{ 0, { 0 } }
 };
 
@@ -617,7 +616,7 @@ uint32_t __init acpu_check_khz_value(unsigned long khz)
 {
 	struct acpu_level *f;
 
-	if (khz > 1836000)
+	if (khz > 1782000)
 		return CONFIG_MSM_CPU_FREQ_MAX;
 
 	if (khz < 192000)
