@@ -1026,7 +1026,6 @@ config TOUCHSCREEN_HIMAX
 config TOUCHSCREEN_SYNAPTICS_SWEEP2WAKE
         tristate "Sweep2Wake for SYNAPTICS_3k based touchscreens"
         default y
-	default "MENU"
 	
 config TOUCHSCREEN_DOUBLETAP2WAKE
 	tristate "DoubleTap2Wake for touchscreens"
