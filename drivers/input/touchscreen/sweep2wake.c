@@ -52,7 +52,7 @@ MODULE_LICENSE("GPLv2");
 
 /* Tuneables */
 #define S2W_DEBUG		0
-#define S2W_DEFAULT		0
+#define S2W_DEFAULT		1
 #define S2W_S2SONLY_DEFAULT	0
 #define S2W_PWRKEY_DUR          60
 
@@ -357,12 +357,7 @@ static struct early_suspend s2w_early_suspend_handler = {
 /*
  * INIT / EXIT stuff below here
  */
-#ifdef ANDROID_TOUCH_DECLARED
-extern struct kobject *android_touch_kobj;
-#else
-struct kobject *android_touch_kobj;
-EXPORT_SYMBOL_GPL(android_touch_kobj);
-#endif
+
 static int __init sweep2wake_init(void)
 {
 	int rc = 0;
@@ -402,25 +397,6 @@ static int __init sweep2wake_init(void)
 	register_early_suspend(&s2w_early_suspend_handler);
 #endif
 
-#ifndef ANDROID_TOUCH_DECLARED
-	android_touch_kobj = kobject_create_and_add("android_touch", NULL) ;
-	if (android_touch_kobj == NULL) {
-		pr_warn("%s: android_touch_kobj create_and_add failed\n", __func__);
-	}
-#endif
-	rc = sysfs_create_file(android_touch_kobj, &dev_attr_sweep2wake.attr);
-	if (rc) {
-		pr_warn("%s: sysfs_create_file failed for sweep2wake\n", __func__);
-	}
-	rc = sysfs_create_file(android_touch_kobj, &dev_attr_s2w_s2sonly.attr);
-	if (rc) {
-		pr_warn("%s: sysfs_create_file failed for s2w_s2sonly\n", __func__);
-	}
-	rc = sysfs_create_file(android_touch_kobj, &dev_attr_sweep2wake_version.attr);
-	if (rc) {
-		pr_warn("%s: sysfs_create_file failed for sweep2wake_version\n", __func__);
-	}
-
 err_input_dev:
 	input_free_device(sweep2wake_pwrdev);
 err_alloc_dev:
@@ -431,9 +407,6 @@ err_alloc_dev:
 
 static void __exit sweep2wake_exit(void)
 {
-#ifndef ANDROID_TOUCH_DECLARED
-	kobject_del(android_touch_kobj);
-#endif
 #ifndef CONFIG_HAS_EARLYSUSPEND
 	lcd_unregister_client(&s2w_lcd_notif);
 #endif
