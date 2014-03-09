@@ -1,6 +1,7 @@
 CFLAGS_scm.o :=$(call as-instr,.arch_extension sec,-DREQUIRES_SEC=1)
 
 obj-y += io.o dma.o memory.o emmc_partitions.o
+obj-$(CONFIG_MSM_MPDEC) += msm_mpdecision.o
 ifndef CONFIG_ARM_ARCH_TIMER
 obj-y += timer.o
 endif
