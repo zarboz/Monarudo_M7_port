@@ -857,10 +857,10 @@ static int __devinit pm8xxx_led_probe(struct platform_device *pdev)
 
 		if (!strcmp(led_dat->cdev.name, "button-backlight")) {
 			for_key_led_data = led_dat;
-#ifdef CONFIG_TOUCHSCREEN_SYNAPTICS_SWEEP2WAKE
+/*#ifdef CONFIG_TOUCHSCREEN_SYNAPTICS_SWEEP2WAKE
 			sweep2wake_setleddev(&led_dat->cdev);
 			printk(KERN_INFO "[sweep2wake]: set led device %s, bank %i\n", led->cdev.name, led_dat->bank);
-#endif
+#endif*/
 		}
 		if (!strcmp(led_dat->cdev.name, "green-back")) {
 			LED_INFO("%s: green-back, 000 probe, led_dat = %x\n", __func__, (unsigned int)led_dat);
