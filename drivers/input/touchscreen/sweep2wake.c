@@ -53,7 +53,6 @@ MODULE_LICENSE("GPLv2");
 /* Tuneables */
 #define S2W_DEBUG		0
 #define S2W_DEFAULT		1
-#define S2W_S2SONLY_DEFAULT	0
 #define S2W_PWRKEY_DUR          60
 
 #ifdef CONFIG_MACH_MSM8974_HAMMERHEAD
@@ -90,7 +89,7 @@ MODULE_LICENSE("GPLv2");
 
 
 /* Resources */
-int s2w_switch = S2W_DEFAULT, s2w_s2sonly = S2W_S2SONLY_DEFAULT;
+int s2w_switch = S2W_DEFAULT;
 static int touch_x = 0, touch_y = 0;
 static bool touch_x_called = false, touch_y_called = false;
 static bool scr_suspended = false, exec_count = true;
@@ -112,7 +111,10 @@ static int __init read_s2w_cmdline(char *s2w)
 	} else if (strcmp(s2w, "0") == 0) {
 		pr_info("[cmdline_s2w]: Sweep2Wake disabled. | s2w='%s'\n", s2w);
 		s2w_switch = 0;
-	} else {
+	} else if (strcmp(s2w, "2") == 0) {
+		pr_info("[cmdline_s2s]: Sweep2Sleep only enabled. | s2w='%s'\n", s2w);
+		s2w_switch = 2;
+        } else {
 		pr_info("[cmdline_s2w]: No valid input found. Going with default: | s2w='%u'\n", s2w_switch);
 	}
 	return 1;
@@ -158,7 +160,7 @@ static void detect_sweep2wake(int x, int y, bool st)
                 x, y, (single_touch) ? "true" : "false");
 #endif
 	//left->right
-	if ((single_touch) && (scr_suspended == true) && (s2w_switch > 0 && !s2w_s2sonly)) {
+	if ((single_touch) && (scr_suspended == true) && (s2w_switch > 0 && s2w_switch != 2)) {
 		prevx = 0;
 		nextx = S2W_X_B1;
 		if ((barrier[0] == true) ||
