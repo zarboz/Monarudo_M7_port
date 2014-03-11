@@ -29,6 +29,7 @@
 #include <linux/slab.h>
 #include <linux/workqueue.h>
 #include <linux/input.h>
+#include <linux/pl_sensor.h>
 #ifndef CONFIG_HAS_EARLYSUSPEND
 #include <linux/lcd_notify.h>
 #else
@@ -63,6 +64,7 @@ MODULE_LICENSE("GPLv2");
 
 /* Resources */
 int dt2w_switch = DT2W_DEFAULT;
+extern int pocket_detect;
 static cputime64_t tap_time_pre = 0;
 static int touch_x = 0, touch_y = 0, touch_nr = 0, x_pre = 0, y_pre = 0;
 static bool touch_x_called = false, touch_y_called = false, touch_cnt = true;
@@ -102,6 +104,12 @@ static void doubletap2wake_reset(void) {
 
 /* PowerKey work func */
 static void doubletap2wake_presspwr(struct work_struct * doubletap2wake_presspwr_work) {
+	int pocket_mode = 0;
+
+	if (scr_suspended == true && pocket_detect == 1)
+			pocket_mode = pocket_detection_check();
+
+	if (!pocket_mode || pocket_detect == 0) {
 	if (!mutex_trylock(&pwrkeyworklock))
                 return;
 	input_event(doubletap2wake_pwrdev, EV_KEY, KEY_POWER, 1);
@@ -112,6 +120,7 @@ static void doubletap2wake_presspwr(struct work_struct * doubletap2wake_presspwr
 	msleep(DT2W_PWRKEY_DUR);
         mutex_unlock(&pwrkeyworklock);
 	return;
+	}
 }
 static DECLARE_WORK(doubletap2wake_presspwr_work, doubletap2wake_presspwr);
 

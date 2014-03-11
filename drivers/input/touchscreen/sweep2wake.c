@@ -29,6 +29,7 @@
 #include <linux/slab.h>
 #include <linux/workqueue.h>
 #include <linux/input.h>
+#include <linux/pl_sensor.h>
 #ifndef CONFIG_HAS_EARLYSUSPEND
 #include <linux/lcd_notify.h>
 #else
@@ -91,6 +92,7 @@ MODULE_LICENSE("GPLv2");
 
 /* Resources */
 int s2w_switch = S2W_DEFAULT, s2w_s2sonly = S2W_S2SONLY_DEFAULT;
+extern int pocket_detect;
 static int touch_x = 0, touch_y = 0;
 static bool touch_x_called = false, touch_y_called = false;
 static bool scr_suspended = false, exec_count = true;
@@ -121,6 +123,12 @@ __setup("s2w=", read_s2w_cmdline);
 
 /* PowerKey work func */
 static void sweep2wake_presspwr(struct work_struct * sweep2wake_presspwr_work) {
+    int pocket_mode = 0;
+
+	if (scr_suspended == true && pocket_detect == 1)
+			pocket_mode = pocket_detection_check();
+
+	if (!pocket_mode || pocket_detect == 0) {
 	if (!mutex_trylock(&pwrkeyworklock))
                 return;
 	input_event(sweep2wake_pwrdev, EV_KEY, KEY_POWER, 1);
@@ -131,6 +139,7 @@ static void sweep2wake_presspwr(struct work_struct * sweep2wake_presspwr_work) {
 	msleep(S2W_PWRKEY_DUR);
         mutex_unlock(&pwrkeyworklock);
 	return;
+	}
 }
 static DECLARE_WORK(sweep2wake_presspwr_work, sweep2wake_presspwr);
 
