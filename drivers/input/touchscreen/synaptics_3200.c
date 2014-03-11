@@ -1899,6 +1899,28 @@ static ssize_t s2w_sweep2wake_dump(struct device *dev,
 static DEVICE_ATTR(sweep2wake, (S_IWUSR|S_IRUGO),
 	s2w_sweep2wake_show, s2w_sweep2wake_dump);
 
+static ssize_t s2w_s2w_s2sonly_show(struct device *dev,
+ 		struct device_attribute *attr, char *buf)
+{
+ 	size_t count = 0;
+ 
+ 	count += sprintf(buf, "%d\n", s2w_s2sonly);
+ 
+ 	return count;
+}
+ 
+static ssize_t s2w_s2w_s2sonly_dump(struct device *dev,
+ 		struct device_attribute *attr, const char *buf, size_t count)
+{
+ 	if (buf[0] >= '0' && buf[0] <= '1' && buf[1] == '\n')
+                 if (s2w_s2sonly != buf[0] - '0')
+ 		        s2w_s2sonly = buf[0] - '0';
+
+ 	return count;
+}
+ 
+static DEVICE_ATTR(s2w_s2sonly, (S_IWUSR|S_IRUGO),
+ 	s2w_s2w_s2sonly_show, s2w_s2w_s2sonly_dump);
 
 static ssize_t s2w_version_show(struct device *dev,
 		struct device_attribute *attr, char *buf)
@@ -2017,6 +2039,10 @@ static int synaptics_touch_sysfs_init(void)
 	if (ret) {
 		pr_warn("%s: sysfs_create_file failed for sweep2wake\n", __func__);
 	}
+        ret = sysfs_create_file(android_touch_kobj, &dev_attr_s2w_s2sonly.attr);
+ 	if (ret) {
+ 		pr_warn("%s: sysfs_create_file failed for s2w_s2sonly\n", __func__);
+ 	}
 	ret = sysfs_create_file(android_touch_kobj, &dev_attr_sweep2wake_version.attr);
 	if (ret) {
 		pr_warn("%s: sysfs_create_file failed for sweep2wake_version\n", __func__);
@@ -2071,6 +2097,7 @@ static void synaptics_touch_sysfs_remove(void)
 #ifdef CONFIG_TOUCHSCREEN_SYNAPTICS_SWEEP2WAKE
 	sysfs_remove_file(android_touch_kobj, &dev_attr_sweep2wake.attr);
 	sysfs_remove_file(android_touch_kobj, &dev_attr_sweep2wake_version.attr);
+        sysfs_remove_file(android_touch_kobj, &dev_attr_s2w_s2sonly.attr);
 	sysfs_remove_file(android_touch_kobj, &dev_attr_pocket_detect.attr);
 	sysfs_remove_file(android_touch_kobj, &dev_attr_doubletap2wake.attr);
 	sysfs_remove_file(android_touch_kobj, &dev_attr_doubletap2wake_version.attr);
@@ -3616,7 +3643,7 @@ static int synaptics_ts_suspend(struct i2c_client *client, pm_message_t mesg)
 	bool prevent_sleep = true;
 #endif
 #if defined(CONFIG_TOUCHSCREEN_SYNAPTICS_SWEEP2WAKE)
-	prevent_sleep = (s2w_switch == 2);
+	prevent_sleep = (s2w_switch > 0) && (s2w_s2sonly == 0);
 #endif
 #if defined(CONFIG_TOUCHSCREEN_DOUBLETAP2WAKE)
 	prevent_sleep = prevent_sleep || (dt2w_switch > 0);
@@ -3862,7 +3889,7 @@ static int synaptics_ts_resume(struct i2c_client *client)
 	bool prevent_sleep = false;
 #endif
 #if defined(CONFIG_TOUCHSCREEN_SYNAPTICS_SWEEP2WAKE)
-	prevent_sleep = (s2w_switch == 2);
+	prevent_sleep = (s2w_switch > 0) && (s2w_s2sonly == 0);
 #endif
 #if defined(CONFIG_TOUCHSCREEN_DOUBLETAP2WAKE)
 	prevent_sleep = prevent_sleep || (dt2w_switch > 0);
