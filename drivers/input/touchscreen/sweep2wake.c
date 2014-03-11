@@ -54,7 +54,7 @@ MODULE_LICENSE("GPLv2");
 /* Tuneables */
 #define S2W_DEBUG		0
 #define S2W_DEFAULT		1
-#define S2W_S2SONLY_DEFAULT	0
+#define S2W_S2SONLY_DEFAULT     0
 #define S2W_PWRKEY_DUR          60
 
 #ifdef CONFIG_MACH_MSM8974_HAMMERHEAD
@@ -81,8 +81,8 @@ MODULE_LICENSE("GPLv2");
 #define S2W_X_B2                700
 #define S2W_X_FINAL             450
 #else
-/* defaults */
-#define S2W_Y_LIMIT             2350
+/* Defaults for Monarudo */
+#define S2W_Y_LIMIT             2725
 #define S2W_X_MAX               1540
 #define S2W_X_B1                500
 #define S2W_X_B2                1000
@@ -114,12 +114,28 @@ static int __init read_s2w_cmdline(char *s2w)
 	} else if (strcmp(s2w, "0") == 0) {
 		pr_info("[cmdline_s2w]: Sweep2Wake disabled. | s2w='%s'\n", s2w);
 		s2w_switch = 0;
-	} else {
+        } else {
 		pr_info("[cmdline_s2w]: No valid input found. Going with default: | s2w='%u'\n", s2w_switch);
 	}
 	return 1;
 }
 __setup("s2w=", read_s2w_cmdline);
+
+/* Read cmdline for s2w_s2sonly */
+static int __init read_s2w_s2sonly_cmdline(char *s2s)
+{
+	if (strcmp(s2s, "1") == 0) {
+		pr_info("[cmdline_s2sonly]: Sweep2Sleep only enabled. | s2s='%s'\n", s2s);
+		s2w_s2sonly = 1;
+	} else if (strcmp(s2s, "0") == 0) {
+		pr_info("[cmdline_s2sonly: Sweep2Sleep only disabled. | s2s='%s'\n", s2s);
+		s2w_s2sonly = 0;
+        } else {
+		pr_info("[cmdline_s2sonly]: No valid input found. Going with default: | s2s='%u'\n", s2w_s2sonly);
+	}
+	return 1;
+}
+__setup("s2s=", read_s2w_s2sonly_cmdline);
 
 /* PowerKey work func */
 static void sweep2wake_presspwr(struct work_struct * sweep2wake_presspwr_work) {
@@ -362,7 +378,6 @@ static struct early_suspend s2w_early_suspend_handler = {
 	.resume = s2w_late_resume,
 };
 #endif
-
 
 /*
  * INIT / EXIT stuff below here
