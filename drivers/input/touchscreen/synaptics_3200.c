@@ -147,7 +147,7 @@ struct synaptics_ts_data {
 };
 
 #ifdef CONFIG_TOUCHSCREEN_SYNAPTICS_SWEEP2WAKE
-static int pocket_detect = 1;
+int pocket_detect = 1;
 #endif
 
 #ifdef CONFIG_HAS_EARLYSUSPEND
