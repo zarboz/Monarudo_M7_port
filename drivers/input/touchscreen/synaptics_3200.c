@@ -258,7 +258,7 @@ static void syn_page_select(struct i2c_client *client, uint8_t page)
 static int i2c_syn_read(struct i2c_client *client, uint16_t addr, uint8_t *data, uint16_t length)
 {
 	uint8_t retry, buf;
-
+#define SYANPTICS_I2C_RETRY 10
 	struct i2c_msg msg[] = {
 		{
 			.addr = client->addr,
@@ -277,19 +277,17 @@ static int i2c_syn_read(struct i2c_client *client, uint16_t addr, uint8_t *data,
 
 	mutex_lock(&syn_mutex);
 	syn_page_select(client, addr >> 8);
-	for (retry = 0; retry < SYN_I2C_RETRY_TIMES; retry++) {
+	for (retry = 0; retry < SYANPTICS_I2C_RETRY; retry++) {
 		if (i2c_transfer(client->adapter, msg, 2) == 2)
 			break;
-		hr_msleep(10);
+	if (retry == SYANPTICS_I2C_RETRY) {
+		printk(KERN_INFO "[TP] i2c_read retry over %d\n",
+			SYANPTICS_I2C_RETRY);
+		return -EIO;
+	} else
+		msleep(10);
 	}
 	mutex_unlock(&syn_mutex);
-
-	if (retry == SYN_I2C_RETRY_TIMES) {
-		printk(KERN_INFO "[TP] i2c_read retry over %d\n",
-			SYN_I2C_RETRY_TIMES);
-		return -EIO;
-	}
-
 	return 0;
 }
 
