@@ -2913,11 +2913,6 @@ static struct msm_dcvs_freq_entry grp3d_freq[] = {
 	{0, 0, 844545},
 };
 
-static struct msm_dcvs_freq_entry grp2d_freq[] = {
-	{0, 0, 86000},
-	{0, 0, 200000},
-};
-
 static struct msm_dcvs_core_info grp3d_core_info = {
 	.freq_tbl = &grp3d_freq[0],
 	.core_param = {
@@ -2934,22 +2929,6 @@ static struct msm_dcvs_core_info grp3d_core_info = {
 	},
 };
 
-static struct msm_dcvs_core_info grp2d_core_info = {
-	.freq_tbl = &grp2d_freq[0],
-	.core_param = {
-		.max_time_us = 100000,
-		.num_freq = ARRAY_SIZE(grp2d_freq),
-	},
-	.algo_param = {
-		.slack_time_us = 39000,
-		.disable_pc_threshold = 90000,
-		.ss_window_size = 1000000,
-		.ss_util_pct = 90,
-		.em_max_util_pct = 95,
-	},
-};
-
-#ifdef CONFIG_MSM_BUS_SCALING
 static struct msm_bus_vectors grp3d_init_vectors[] = {
 	{
 		.src = MSM_BUS_MASTER_GRAPHICS_3D,
@@ -3023,103 +3002,6 @@ static struct msm_bus_scale_pdata grp3d_bus_scale_pdata = {
 	ARRAY_SIZE(grp3d_bus_scale_usecases),
 	.name = "grp3d",
 };
-
-static struct msm_bus_vectors grp2d0_init_vectors[] = {
-	{
-		.src = MSM_BUS_MASTER_GRAPHICS_2D_CORE0,
-		.dst = MSM_BUS_SLAVE_EBI_CH0,
-		.ab = 0,
-		.ib = 0,
-	},
-};
-
-static struct msm_bus_vectors grp2d0_nominal_vectors[] = {
-	{
-		.src = MSM_BUS_MASTER_GRAPHICS_2D_CORE0,
-		.dst = MSM_BUS_SLAVE_EBI_CH0,
-		.ab = 0,
-		.ib = KGSL_CONVERT_TO_MBPS(1000),
-	},
-};
-
-static struct msm_bus_vectors grp2d0_max_vectors[] = {
-	{
-		.src = MSM_BUS_MASTER_GRAPHICS_2D_CORE0,
-		.dst = MSM_BUS_SLAVE_EBI_CH0,
-		.ab = 0,
-		.ib = KGSL_CONVERT_TO_MBPS(2048),
-	},
-};
-
-static struct msm_bus_paths grp2d0_bus_scale_usecases[] = {
-	{
-		ARRAY_SIZE(grp2d0_init_vectors),
-		grp2d0_init_vectors,
-	},
-	{
-		ARRAY_SIZE(grp2d0_nominal_vectors),
-		grp2d0_nominal_vectors,
-	},
-	{
-		ARRAY_SIZE(grp2d0_max_vectors),
-		grp2d0_max_vectors,
-	},
-};
-
-struct msm_bus_scale_pdata grp2d0_bus_scale_pdata = {
-	grp2d0_bus_scale_usecases,
-	ARRAY_SIZE(grp2d0_bus_scale_usecases),
-	.name = "grp2d0",
-};
-
-static struct msm_bus_vectors grp2d1_init_vectors[] = {
-	{
-		.src = MSM_BUS_MASTER_GRAPHICS_2D_CORE1,
-		.dst = MSM_BUS_SLAVE_EBI_CH0,
-		.ab = 0,
-		.ib = 0,
-	},
-};
-
-static struct msm_bus_vectors grp2d1_nominal_vectors[] = {
-	{
-		.src = MSM_BUS_MASTER_GRAPHICS_2D_CORE1,
-		.dst = MSM_BUS_SLAVE_EBI_CH0,
-		.ab = 0,
-		.ib = KGSL_CONVERT_TO_MBPS(1000),
-	},
-};
-
-static struct msm_bus_vectors grp2d1_max_vectors[] = {
-	{
-		.src = MSM_BUS_MASTER_GRAPHICS_2D_CORE1,
-		.dst = MSM_BUS_SLAVE_EBI_CH0,
-		.ab = 0,
-		.ib = KGSL_CONVERT_TO_MBPS(2048),
-	},
-};
-
-static struct msm_bus_paths grp2d1_bus_scale_usecases[] = {
-	{
-		ARRAY_SIZE(grp2d1_init_vectors),
-		grp2d1_init_vectors,
-	},
-	{
-		ARRAY_SIZE(grp2d1_nominal_vectors),
-		grp2d1_nominal_vectors,
-	},
-	{
-		ARRAY_SIZE(grp2d1_max_vectors),
-		grp2d1_max_vectors,
-	},
-};
-
-struct msm_bus_scale_pdata grp2d1_bus_scale_pdata = {
-	grp2d1_bus_scale_usecases,
-	ARRAY_SIZE(grp2d1_bus_scale_usecases),
-	.name = "grp2d1",
-};
-#endif
 
 static struct resource kgsl_3d0_resources[] = {
 	{
@@ -3198,140 +3080,6 @@ struct platform_device msm_kgsl_3d0 = {
 	.resource = kgsl_3d0_resources,
 	.dev = {
 		.platform_data = &kgsl_3d0_pdata,
-	},
-};
-
-static struct resource kgsl_2d0_resources[] = {
-	{
-		.name = KGSL_2D0_REG_MEMORY,
-		.start = 0x04100000, 
-		.end = 0x04100FFF,
-		.flags = IORESOURCE_MEM,
-	},
-	{
-		.name  = KGSL_2D0_IRQ,
-		.start = GFX2D0_IRQ,
-		.end = GFX2D0_IRQ,
-		.flags = IORESOURCE_IRQ,
-	},
-};
-
-static const struct kgsl_iommu_ctx kgsl_2d0_iommu_ctxs[] = {
-	{ "gfx2d0_2d0", 0 },
-};
-
-static struct kgsl_device_iommu_data kgsl_2d0_iommu_data[] = {
-	{
-		.iommu_ctxs = kgsl_2d0_iommu_ctxs,
-		.iommu_ctx_count = ARRAY_SIZE(kgsl_2d0_iommu_ctxs),
-		.physstart = 0x07D00000,
-		.physend = 0x07D00000 + SZ_1M - 1,
-	},
-};
-
-static struct kgsl_device_platform_data kgsl_2d0_pdata = {
-	.pwrlevel = {
-		{
-			.gpu_freq = 200000000,
-			.bus_freq = 2,
-		},
-		{
-			.gpu_freq = 96000000,
-			.bus_freq = 1,
-		},
-		{
-			.gpu_freq = 27000000,
-			.bus_freq = 0,
-		},
-	},
-	.init_level = 0,
-	.num_levels = ARRAY_SIZE(grp2d_freq) + 1,
-	.set_grp_async = NULL,
-	.idle_timeout = HZ/5,
-	.nap_allowed = true,
-	.clk_map = KGSL_CLK_CORE | KGSL_CLK_IFACE,
-#ifdef CONFIG_MSM_BUS_SCALING
-	.bus_scale_table = &grp2d0_bus_scale_pdata,
-#endif
-	.iommu_data = kgsl_2d0_iommu_data,
-	.iommu_count = ARRAY_SIZE(kgsl_2d0_iommu_data),
-	.core_info = &grp2d_core_info,
-};
-
-struct platform_device msm_kgsl_2d0 = {
-	.name = "kgsl-2d0",
-	.id = 0,
-	.num_resources = ARRAY_SIZE(kgsl_2d0_resources),
-	.resource = kgsl_2d0_resources,
-	.dev = {
-		.platform_data = &kgsl_2d0_pdata,
-	},
-};
-
-static const struct kgsl_iommu_ctx kgsl_2d1_iommu_ctxs[] = {
-	{ "gfx2d1_2d1", 0 },
-};
-
-static struct kgsl_device_iommu_data kgsl_2d1_iommu_data[] = {
-	{
-		.iommu_ctxs = kgsl_2d1_iommu_ctxs,
-		.iommu_ctx_count = ARRAY_SIZE(kgsl_2d1_iommu_ctxs),
-		.physstart = 0x07E00000,
-		.physend = 0x07E00000 + SZ_1M - 1,
-	},
-};
-
-static struct resource kgsl_2d1_resources[] = {
-	{
-		.name = KGSL_2D1_REG_MEMORY,
-		.start = 0x04200000, 
-		.end =   0x04200FFF,
-		.flags = IORESOURCE_MEM,
-	},
-	{
-		.name  = KGSL_2D1_IRQ,
-		.start = GFX2D1_IRQ,
-		.end = GFX2D1_IRQ,
-		.flags = IORESOURCE_IRQ,
-	},
-};
-
-static struct kgsl_device_platform_data kgsl_2d1_pdata = {
-	.pwrlevel = {
-		{
-			.gpu_freq = 200000000,
-			.bus_freq = 2,
-		},
-		{
-			.gpu_freq = 96000000,
-			.bus_freq = 1,
-		},
-		{
-			.gpu_freq = 27000000,
-			.bus_freq = 0,
-		},
-	},
-	.init_level = 0,
-	.num_levels = ARRAY_SIZE(grp2d_freq) + 1,
-	.set_grp_async = NULL,
-	.idle_timeout = HZ/5,
-	.nap_allowed = true,
-	.clk_map = KGSL_CLK_CORE | KGSL_CLK_IFACE,
-#ifdef CONFIG_MSM_BUS_SCALING
-	.bus_scale_table = &grp2d1_bus_scale_pdata,
-#endif
-	.iommu_data = kgsl_2d1_iommu_data,
-	.iommu_count = ARRAY_SIZE(kgsl_2d1_iommu_data),
-	.core_info = &grp2d_core_info,
-};
-
-struct platform_device msm_kgsl_2d1 = {
-	.name = "kgsl-2d1",
-	.id = 1,
-	.num_resources = ARRAY_SIZE(kgsl_2d1_resources),
-	.resource = kgsl_2d1_resources,
-	.dev = {
-		.platform_data = &kgsl_2d1_pdata,
 	},
 };
 
