@@ -27,7 +27,10 @@
 
 #define POCKET_DETECT_DEFAULT 1
 
+/* Are we turned ON or OFF? Value read from '/sysfs' 1 = ON : 0 = OFF */
 int pocket_detect = POCKET_DETECT_DEFAULT;
+
+/* Are we inside a pocket, or is our sensor being blocked? 1 = Blocked : 0 = Clear */
 int pocket_mode = 0;
 
 /* Read cmdline for pocket_detect */
