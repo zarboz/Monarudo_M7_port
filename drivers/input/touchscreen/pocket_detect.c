@@ -21,7 +21,7 @@
 
 #include <linux/kernel.h>
 #include <linux/module.h>
-#include <linux/types.h>
+#include <linux/err.h>
 #include <linux/input.h>
 #include <linux/pl_sensor.h>
 
@@ -34,19 +34,21 @@ int pocket_detect = POCKET_DETECT_DEFAULT;
 int pocket_mode = 0;
 
 /* Read cmdline for pocket_detect */
-static int __init get_pocket_detect(char *pd)
+static int __init read_pocket_detect_cmdline(char *pd)
 {
 	if (strcmp(pd, "1") == 0) {
-		pocket_detect = 1;
+		pr_info("[cmdline_pd]: Enabled. | pd='%s'\n", pd);
+                pocket_detect = 1;
 	} else if (strcmp(pd, "0") == 0) {
+		pr_info("[cmdline_pd]: Disabled. | pd='%s'\n", pd);
 		pocket_detect = 0;
 	} else {
-		pocket_detect = 1;
+		pr_info("[cmdline_pd]: No valid input found. Going with default: | pd='%u'\n", pocket_detect);
 	}
 	return 1;
 }
 
-__setup("pd=", get_pocket_detect);
+__setup("pd=", read_pocket_detect_cmdline);
 
 int check_pocket(void) {
         if (pocket_detect == 1) {
