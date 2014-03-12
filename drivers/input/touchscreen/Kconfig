@@ -1033,5 +1033,9 @@ config TOUCHSCREEN_DOUBLETAP2WAKE
 	string "DoubleTap2Wake magic"
 	default n
 
+config POCKET_DETECT
+        tristate "Pocket_detect for touchscreens"
+        string "Pocket_detect protection"
+        default n
 
 endif
