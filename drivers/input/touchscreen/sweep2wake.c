@@ -29,7 +29,9 @@
 #include <linux/slab.h>
 #include <linux/workqueue.h>
 #include <linux/input.h>
+#ifdef CONFIG_POCKET_DETECT
 #include <linux/input/pocket_detect.h>
+#endif
 #ifndef CONFIG_HAS_EARLYSUSPEND
 #include <linux/lcd_notify.h>
 #else
@@ -139,10 +141,10 @@ __setup("s2s=", read_s2w_s2sonly_cmdline);
 /* PowerKey work func */
 static void sweep2wake_presspwr(struct work_struct * sweep2wake_presspwr_work) {
         int in_pocket = 0;
-
+#ifdef CONFIG_POCKET_DETECT
 	if (scr_suspended == true)
 			in_pocket = check_pocket();
-
+#endif
 	if (in_pocket == 0) {
 	if (!mutex_trylock(&pwrkeyworklock))
                 return;

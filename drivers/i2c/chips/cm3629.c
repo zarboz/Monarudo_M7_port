@@ -2425,6 +2425,7 @@ int power_key_check_in_pocket(void)
 	return (ls_dark && ps_near);
 }
 
+#ifdef CONFIG_POCKET_DETECT
 int pocket_detection_check(void)
 {
 	struct cm3629_info *lpi = lp_info;
@@ -2442,6 +2443,7 @@ int pocket_detection_check(void)
 	pocket_mode_flag = 0;
 	return (ps_near);
 }
+#endif
 
 int psensor_enable_by_touch_driver(int on)
 {
