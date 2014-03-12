@@ -39,6 +39,9 @@
 #ifdef CONFIG_TOUCHSCREEN_DOUBLETAP2WAKE
 #include <linux/input/doubletap2wake.h>
 #endif
+#ifdef CONFIG_POCKET_DETECT
+#include <linux/input/pocket_detect.h>
+#endif
 #include <linux/async.h>
 #include <linux/firmware.h>
 #include <linux/kthread.h>
@@ -146,9 +149,6 @@ struct synaptics_ts_data {
 	uint8_t block_touch_event;
 };
 
-#ifdef CONFIG_TOUCHSCREEN_SYNAPTICS_SWEEP2WAKE
-int pocket_detect = 1;
-#endif
 
 #ifdef CONFIG_HAS_EARLYSUSPEND
 static void synaptics_ts_early_suspend(struct early_suspend *h);
@@ -213,38 +213,6 @@ static void syn_handle_block_touch(struct synaptics_ts_data *ts, int enable)
 	}
 }
 
-#ifdef CONFIG_TOUCHSCREEN_SYNAPTICS_SWEEP2WAKE
-static int __init get_pocket_detect_opt(char *pd)
-{
-	if (strcmp(pd, "0") == 0) {
-		pocket_detect = 0;
-	} else if (strcmp(pd, "1") == 0) {
-		pocket_detect = 1;
-	} else {
-		pocket_detect = 1;
-	}
-	return 1;
-}
-
-__setup("pd=", get_pocket_detect_opt); 
-#endif
-#ifdef CONFIG_TOUCHSCREEN_DOUBLETAP2WAKE
-static int __init get_dt2w_opt(char *dt2w)
-{
-	if (strcmp(dt2w, "0") == 0) {
-		dt2w_switch = 0;
-	} else if (strcmp(dt2w, "1") == 0) {
-		dt2w_switch = 1;
-	} else if (strcmp(dt2w, "2") == 0) {
-		dt2w_switch = 2;
-	} else {
-		dt2w_switch = 0;
-	}
-	return 1;
-}
-
-__setup("dt2w=", get_dt2w_opt); 
-#endif
 static void syn_page_select(struct i2c_client *client, uint8_t page)
 {
 	struct synaptics_ts_data *ts = i2c_get_clientdata(client);
@@ -1768,7 +1736,7 @@ static DEVICE_ATTR(reset, (S_IWUSR),
 	0, syn_reset);
 
 #endif
-#ifdef CONFIG_TOUCHSCREEN_SYNAPTICS_SWEEP2WAKE
+#ifdef CONFIG_POCKET_DETECT
 static ssize_t synaptics_pocket_detect_show(struct device *dev, struct device_attribute *attr, char *buf)
 {
 	size_t count = 0;
@@ -2019,12 +1987,14 @@ static int synaptics_touch_sysfs_init(void)
 		if (sysfs_create_file(android_touch_kobj, &dev_attr_diag.attr) ||
 			sysfs_create_file(android_touch_kobj, &dev_attr_disable_cbc.attr))
 			return -ENOMEM;
-#ifdef CONFIG_TOUCHSCREEN_SYNAPTICS_SWEEP2WAKE
+#ifdef CONFIG_POCKET_DETECT
 	ret = sysfs_create_file(android_touch_kobj, &dev_attr_pocket_detect.attr);
 	if (ret) {
 		printk(KERN_ERR "%s: sysfs_create_file failed\n", __func__);
 		return ret;
 	} 
+#endif
+#ifdef CONFIG_TOUCHSCREEN_DOUBLETAP2WAKE
 	ret = sysfs_create_file(android_touch_kobj, &dev_attr_doubletap2wake.attr);
 	if (ret) {
 		pr_warn("%s: sysfs_create_file failed for doubletap2wake\n", __func__);
@@ -2033,6 +2003,8 @@ static int synaptics_touch_sysfs_init(void)
 	if (ret) {
 		pr_warn("%s: sysfs_create_file failed for doubletap2wake_version\n", __func__);
 	}
+#endif
+#ifdef CONFIG_TOUCHSCREEN_SYNAPTICS_SWEEP2WAKE
 	ret = sysfs_create_file(android_touch_kobj, &dev_attr_sweep2wake.attr);
 	if (ret) {
 		pr_warn("%s: sysfs_create_file failed for sweep2wake\n", __func__);
@@ -2096,7 +2068,11 @@ static void synaptics_touch_sysfs_remove(void)
 	sysfs_remove_file(android_touch_kobj, &dev_attr_sweep2wake.attr);
 	sysfs_remove_file(android_touch_kobj, &dev_attr_sweep2wake_version.attr);
         sysfs_remove_file(android_touch_kobj, &dev_attr_s2w_s2sonly.attr);
+#endif
+#ifdef CONFIG_POCKET_DETECT
 	sysfs_remove_file(android_touch_kobj, &dev_attr_pocket_detect.attr);
+#endif
+#ifdef CONFIG_TOUCHSCREEN_DOUBLETAP2WAKE
 	sysfs_remove_file(android_touch_kobj, &dev_attr_doubletap2wake.attr);
 	sysfs_remove_file(android_touch_kobj, &dev_attr_doubletap2wake_version.attr);
 #endif
