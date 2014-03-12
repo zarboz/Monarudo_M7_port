@@ -34,7 +34,14 @@
 #define PMGPIO(x) (x)
 
 int __init monarudo_init_keypad(void);
+/* cmdline_gpu variables */
+#define CMDLINE_3DGPU_DEFKHZ_0 500000000
+#define CMDLINE_3DGPU_DEFKHZ_1 500000000
+#define CMDLINE_2DGPU_DEFKHZ 266667000
 
+extern unsigned int cmdline_2dgpu;
+extern unsigned int cmdline_3dgpu[2];
+#endi
 
 
 #define LCD_TE			GPIO(0)

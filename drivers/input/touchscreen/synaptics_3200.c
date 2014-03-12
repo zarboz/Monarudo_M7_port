@@ -149,7 +149,6 @@ struct synaptics_ts_data {
 	uint8_t block_touch_event;
 };
 
-
 #ifdef CONFIG_HAS_EARLYSUSPEND
 static void synaptics_ts_early_suspend(struct early_suspend *h);
 static void synaptics_ts_late_resume(struct early_suspend *h);
