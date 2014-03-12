@@ -143,7 +143,7 @@ static void sweep2wake_presspwr(struct work_struct * sweep2wake_presspwr_work) {
 	if (scr_suspended == true)
 			in_pocket = check_pocket();
 
-	if (!in_pocket) {
+	if (in_pocket == 0) {
 	if (!mutex_trylock(&pwrkeyworklock))
                 return;
 	input_event(sweep2wake_pwrdev, EV_KEY, KEY_POWER, 1);

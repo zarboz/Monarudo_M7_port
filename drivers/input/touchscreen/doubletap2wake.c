@@ -108,7 +108,7 @@ static void doubletap2wake_presspwr(struct work_struct * doubletap2wake_presspwr
 	if (scr_suspended == true)
 			in_pocket = check_pocket();
 
-	if (!in_pocket) {
+	if (in_pocket == 0) {
 	if (!mutex_trylock(&pwrkeyworklock))
                 return;
 	input_event(doubletap2wake_pwrdev, EV_KEY, KEY_POWER, 1);
