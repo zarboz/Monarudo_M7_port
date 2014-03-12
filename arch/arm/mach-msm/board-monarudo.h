@@ -41,7 +41,7 @@ int __init monarudo_init_keypad(void);
 
 extern unsigned int cmdline_2dgpu;
 extern unsigned int cmdline_3dgpu[2];
-#endi
+#endif
 
 
 #define LCD_TE			GPIO(0)
