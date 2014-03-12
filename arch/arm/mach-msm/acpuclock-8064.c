@@ -620,11 +620,11 @@ uint32_t __init acpu_check_khz_value(unsigned long khz)
 	if (khz > 1782000)
 		return CONFIG_MSM_CPU_FREQ_MAX;
 
-	if (khz < 189000)
+	if (khz < 162000)
 		return CONFIG_MSM_CPU_FREQ_MIN;
 
 	for (f = tbl_slow,tbl_nom,tbl_fast,tbl_faster; f->speed.khz != 0; f++) {
-		if (khz < 189000) {
+		if (khz < 162000) {
 			if (f->speed.khz == (khz*1000))
 				return f->speed.khz;
 			if ((khz*1000) > f->speed.khz) {
