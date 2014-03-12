@@ -22,21 +22,8 @@
 #include <linux/kernel.h>
 #include <linux/module.h>
 #include <linux/types.h>
-#include <linux/delay.h>
-#include <linux/init.h>
-#include <linux/err.h>
-#include <linux/input/doubletap2wake.h>
-#include <linux/slab.h>
-#include <linux/workqueue.h>
 #include <linux/input.h>
 #include <linux/pl_sensor.h>
-#ifndef CONFIG_HAS_EARLYSUSPEND
-#include <linux/lcd_notify.h>
-#else
-#include <linux/earlysuspend.h>
-#endif
-#include <linux/hrtimer.h>
-#include <asm-generic/cputime.h>
 
 #define POCKET_DETECT_DEFAULT 1
 
@@ -63,5 +50,5 @@ int check_pocket(void) {
                 pocket_mode = pocket_detection_check();
                 return pocket_mode;
         }
-    return pocket_mode;
+        return pocket_mode;
 }

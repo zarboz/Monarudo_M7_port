@@ -29,7 +29,6 @@
 #include <linux/slab.h>
 #include <linux/workqueue.h>
 #include <linux/input.h>
-//#include <linux/pl_sensor.h>
 #include <linux/input/pocket_detect.h>
 #ifndef CONFIG_HAS_EARLYSUSPEND
 #include <linux/lcd_notify.h>
