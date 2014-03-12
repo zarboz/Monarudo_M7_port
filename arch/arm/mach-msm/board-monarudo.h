@@ -35,6 +35,7 @@
 
 int __init monarudo_init_keypad(void);
 /* cmdline_gpu variables */
+#ifdef CONFIG_CMDLINE_OPTIONS
 #define CMDLINE_3DGPU_DEFKHZ_0 500000000
 #define CMDLINE_3DGPU_DEFKHZ_1 500000000
 #define CMDLINE_2DGPU_DEFKHZ 266667000
