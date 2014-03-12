@@ -3623,7 +3623,7 @@ static int synaptics_ts_suspend(struct i2c_client *client, pm_message_t mesg)
 #endif
 #ifdef CONFIG_TOUCHSCREEN_SYNAPTICS_SWEEP2WAKE
 		scr_suspended = true;
-        if (s2w_switch > 0 &&  dt2w_switch > 0 ) {
+        if (s2w_switch > 0 || dt2w_switch > 0 ) {
                 //screen off, enable_irq_wake
                 scr_suspended = true;
                 enable_irq_wake(client->irq);
