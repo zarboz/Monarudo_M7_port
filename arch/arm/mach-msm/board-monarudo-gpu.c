@@ -77,7 +77,7 @@ static int __init devices_read_3dgpu_cmdline(char *khz)
 {
 	unsigned long ui_khz;
 	unsigned long *f;
-	unsigned long valid_freq[7] = {228571000, 266667000, 320000000, 400000000, 487500000,533333000, 0};
+	unsigned long valid_freq[7] = {228571000, 266667000, 320000000, 400000000, 487500000, 533333000, 0};
 	int err;
 
 	err = strict_strtoul(khz, 0, &ui_khz);
@@ -91,7 +91,7 @@ static int __init devices_read_3dgpu_cmdline(char *khz)
 	}
 
 	/* Check if parsed value is valid */
-	if (ui_khz > 450000000)
+	if (ui_khz > 533333000)
 		cmdline_3dgpu[1] = CMDLINE_3DGPU_DEFKHZ_1;
 		cmdline_3dgpu[0] = CMDLINE_3DGPU_DEFKHZ_0;
 
@@ -434,12 +434,12 @@ static struct kgsl_device_iommu_data kgsl_3d0_iommu_data[] = {
 
 static struct kgsl_device_platform_data kgsl_3d0_pdata = {
 	.pwrlevel = {
-		{
-			.gpu_freq = 487500000,
-			.bus_freq = 5,
-			.io_fraction = 0,
-		},
-        {
+//		{
+//			.gpu_freq = 487500000,
+//			.bus_freq = 5,
+//			.io_fraction = 0,
+//		},
+                {
 			.gpu_freq = 400000000,
 			.bus_freq = 4,
 			.io_fraction = 0,
@@ -460,7 +460,7 @@ static struct kgsl_device_platform_data kgsl_3d0_pdata = {
 		},
 	},
 	.init_level = 2,
-	.num_levels = 5,
+	.num_levels = 4,
 	.set_grp_async = NULL,
 	.idle_timeout = HZ/10,
 	.nap_allowed = true,
@@ -516,8 +516,8 @@ static struct kgsl_device_iommu_data kgsl_2d0_iommu_data[] = {
 static struct kgsl_device_platform_data kgsl_2d0_pdata = {
 	.pwrlevel = {
 		{
-			  .gpu_freq = 300000000,
-			   .bus_freq = 4,
+			.gpu_freq = 300000000,
+			.bus_freq = 4,
 		},
 		{
 			.gpu_freq = 266667000,
@@ -591,8 +591,8 @@ static struct resource kgsl_2d1_resources[] = {
 static struct kgsl_device_platform_data kgsl_2d1_pdata = {
 	.pwrlevel = {
 		{
-			  .gpu_freq = 300000000,
-			   .bus_freq = 4,
+			 .gpu_freq = 300000000,
+			 .bus_freq = 4,
 		},
 		{
 			.gpu_freq = 266667000,
