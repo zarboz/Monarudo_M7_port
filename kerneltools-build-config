@@ -10,7 +10,7 @@ FLASH_BOOT='write_raw_image("/tmp/boot.img", "boot")'
 # ----
 
 N_CORES=4
-VERSION=torrented-beta-0.3.5
+VERSION=torrented-beta-0.3.6
 # ----
 
 BANNER=`cat <<EOF
