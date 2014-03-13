@@ -3060,17 +3060,20 @@ static struct kgsl_device_platform_data kgsl_3d0_pdata = {
 		},
 	},
 	.init_level = 2,
-	.num_levels = ARRAY_SIZE(grp3d_freq) + 1,
+	.num_levels = 5,
 	.set_grp_async = NULL,
-	.idle_timeout = HZ/12,
+	.idle_timeout = HZ/10,
 	.nap_allowed = true,
+	.strtstp_sleepwake = false,
 	.clk_map = KGSL_CLK_CORE | KGSL_CLK_IFACE | KGSL_CLK_MEM_IFACE,
 #ifdef CONFIG_MSM_BUS_SCALING
 	.bus_scale_table = &grp3d_bus_scale_pdata,
 #endif
 	.iommu_data = kgsl_3d0_iommu_data,
 	.iommu_count = ARRAY_SIZE(kgsl_3d0_iommu_data),
+#ifdef CONFIG_MSM_DCVS
 	.core_info = &grp3d_core_info,
+#endif
 };
 
 struct platform_device msm_kgsl_3d0 = {
