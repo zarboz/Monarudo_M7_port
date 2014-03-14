@@ -239,6 +239,35 @@ config ARCH_APQ8064_M7
 	select MSM_CPU_PWRCTL
 	select MSM_IOMMU_GPU_SYNC
 
+config ARCH_APQ8064_DLXP
+	bool "APQ8064_DLXP"
+	select ARCH_MSM_KRAITMP
+	select GPIO_MSM_V2
+	select ARM_GIC
+	select CPU_V7
+	select MSM_SCM if SMP
+	select MSM_GPIOMUX
+	select MSM_REMOTE_SPINLOCK_SFPB
+	select MSM_PIL
+	select MSM_QDSP6_APR
+	select MSM_QDSP6_CODECS
+	select MSM_AUDIO_QDSP6 if SND_SOC
+	select MULTI_IRQ_HANDLER
+	select MSM_RPM
+	select MSM_SPM_V2
+	select MSM_L2_SPM
+	select MSM_PM8X60 if PM
+	select CPU_HAS_L2_PMU
+	select HOLES_IN_ZONE if SPARSEMEM
+	select CLEANCACHE
+	select QCACHE
+	select MIGHT_HAVE_PCI
+	select ARCH_SUPPORTS_MSI
+	select ARM_HAS_SG_CHAIN
+	select MSM_KRAIT_WFE_FIXUP
+	select MSM_IOMMU_GPU_SYNC
+	select MSM_CPU_PWRCTL
+
 config ARCH_MSM8974
 	bool "MSM8974"
 	select ARCH_MSM_KRAITMP
@@ -2849,6 +2878,12 @@ config MACH_IMPRESSION_J
         bool "APQ8064 IMPRESSION_J"
         help
           Support for the HTC APQ8064 IMPRESSION_J.
+
+config MACH_DLXP_UL
+	depends on ARCH_APQ8064
+	bool "APQ8064 DLXP_UL"
+	help
+	  Support for the HTC APQ8064 DLXP_UL.
 
 config MACH_M7_UL
         depends on ARCH_APQ8064

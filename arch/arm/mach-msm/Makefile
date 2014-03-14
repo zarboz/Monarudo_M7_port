@@ -236,6 +236,7 @@ ifdef CONFIG_BT
 	obj-$(CONFIG_MACH_M7_WLJ) += board-m7wl-rfkill.o  htc_bdaddress.o htc_4335_wl_reg.o
 	obj-$(CONFIG_MACH_M7_DCG) += htc_bdaddress.o
 	obj-$(CONFIG_MACH_M7_DUG) += htc_bdaddress.o
+	obj-$(CONFIG_MACH_DLXP_UL) += board-dlxp_ul-rfkill.o htc_bdaddress.o htc_4335_wl_reg.o
 endif
 
 #ifdef CONFIG_MSM_CAMERA_V4L2
@@ -322,6 +323,7 @@ board-m7wlv-all-objs += board-m7wlv.o board-m7wlv-pmic.o board-m7wl-storage.o bo
 board-m7wlj-all-objs += board-m7wlj.o board-m7wlj-pmic.o board-m7wlj-storage.o board-m7wlj-gpiomux.o board-m7wlj-keypad.o board-m7wl-wifi.o board-m7wlj-audio.o
 board-m7dcg-all-objs += board-m7dcg.o board-m7dcg-pmic.o board-m7china-storage.o board-m7china-gpiomux.o board-m7dcg-keypad.o board-m7china-wifi.o board-m7china-audio.o board-m7evm-pmic.o board-m7evm.o
 board-m7dug-all-objs += board-m7dug.o board-m7dug-pmic.o board-m7china-storage.o board-m7china-gpiomux.o board-m7dug-keypad.o board-m7china-wifi.o board-m7china-audio.o board-m7evm-pmic.o board-m7evm.o
+board-dlxp_ul-all-objs += board-dlxp_ul.o board-dlxp_ul-pmic.o board-dlxp_ul-storage.o board-dlxp_ul-gpiomux.o board-dlxp_ul-display.o board-dlxp_ul-gpu.o board-dlxp_ul-keypad.o board-dlxp_ul-wifi.o  board-dlxp_ul-audio.o
 
 ifdef CONFIG_FB_MSM
 board-deluxe_j-all-objs += board-deluxe_j-display.o board-deluxe_j-gpu.o
@@ -338,6 +340,7 @@ board-k2_cl-all-objs += board-k2-display.o board-k2-gpu.o
 board-k2_plc_cl-all-objs += board-k2-display.o board-k2-gpu.o
 board-k2_u-all-objs += board-k2-display.o board-k2-gpu.o
 board-k2_ul-all-objs += board-k2-display.o board-k2-gpu.o
+board-dlxp_ul-all-objs += board-dlxp_ul-display.o board-dlxp_ul-gpu.o
 endif
 
 ifdef CONFIG_MSM_CAMERA
@@ -352,6 +355,7 @@ board-m7wlv-all-objs += board-m7wlv-camera.o
 board-m7wlj-all-objs += board-m7wlj-camera.o
 board-m7dcg-all-objs += board-m7china-camera.o
 board-m7dug-all-objs += board-m7china-camera.o
+board-dlxp_ul-all-objs += board-dlxp_ul-camera.o
 endif
 obj-$(CONFIG_MACH_MSM8960_SIM) += board-8960-all.o board-8960-regulator.o
 obj-$(CONFIG_MACH_MSM8960_RUMI3) += board-8960-all.o board-8960-regulator.o
@@ -380,6 +384,8 @@ obj-$(CONFIG_MACH_M7_WLV) += board-m7wlv-all.o board-m7wl-regulator.o
 obj-$(CONFIG_MACH_M7_WLJ) += board-m7wlj-all.o board-m7wlj-regulator.o
 obj-$(CONFIG_MACH_M7_DCG) += board-m7dcg-all.o board-m7china-regulator.o
 obj-$(CONFIG_MACH_M7_DUG) += board-m7dug-all.o board-m7china-regulator.o
+obj-$(CONFIG_MACH_DLXP_UL) += board-dlxp_ul-all.o board-dlxp_ul-regulator.o
+
 
 obj-$(CONFIG_MACH_MONARUDO) += htc_util.o
 obj-$(CONFIG_MACH_DELUXE_J) += htc_util.o
@@ -424,6 +430,7 @@ obj-$(CONFIG_MACH_VALENTE_WX_C9) += board-valente_wx_c9.o board-valente_wx_c9-re
 obj-$(CONFIG_MACH_VALENTE_WX_C9) += board-valente_wx_c9-keypad.o
 obj-$(CONFIG_MACH_VALENTE_WX_C9) += htc_bdaddress.o
 obj-$(CONFIG_MACH_VALENTE_WX_C9) += htc_util.o
+obj-$(CONFIG_MACH_DLXP_UL) += htc_util.o
 
 obj-$(CONFIG_MACH_K2_U) += board-k2_u.o board-k2_u-all.o board-k2_u-regulator.o board-k2_ul-audio.o
 obj-$(CONFIG_MACH_K2_U) += htc_bdaddress.o board-k2_u-rfkill.o htc_sleep_clk.o htc_util.o board-k2-camera.o
