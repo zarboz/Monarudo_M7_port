@@ -115,6 +115,7 @@ struct msm_otg_platform_data {
 	char *ldo_1v8_name;
 	char *vddcx_name;
 	bool disable_reset_on_disconnect;
+	bool enable_dcd;
 	bool enable_lpm_on_dev_suspend;
 	bool core_clk_always_on_workaround;
 	struct msm_bus_scale_pdata *bus_scale_table;
@@ -122,6 +123,7 @@ struct msm_otg_platform_data {
 	void (*usb_uart_switch)(int uart);
 	int ldo_power_collapse;
 };
+
 
 #define TA_WAIT_VRISE	100	
 #define TA_WAIT_VFALL	500	
@@ -193,7 +195,7 @@ struct msm_otg {
 	struct delayed_work pmic_id_status_work;
 	enum usb_chg_state chg_state;
 	enum usb_chg_type chg_type;
-	unsigned dcd_time;
+	u8 dcd_retries;
 	struct wake_lock wlock, usb_otg_wlock;
 	struct wake_lock cable_detect_wlock;
 	struct notifier_block usbdev_nb;
