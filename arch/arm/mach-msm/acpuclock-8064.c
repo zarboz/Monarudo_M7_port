@@ -416,6 +416,7 @@ static struct acpu_level tbl_PVS6_1700MHz[] __initdata = {
 	{ 0, { 0 } }
 };
 
+
 static struct acpu_level tbl_PVS0_2000MHz[] __initdata = {
 	{ 1, {   384000, PLL_8, 0, 0x00 }, L2(0),   950000 },
 	{ 1, {   486000, HFPLL, 2, 0x24 }, L2(5),   950000 },

@@ -56,10 +56,7 @@ obj-$(CONFIG_SND_SOC_MSM8X60) += snd-soc-lpass-dma.o
 
 obj-$(CONFIG_SND_SOC_MSM_QDSP6_INTF) += qdsp6/
 
-#snd-soc-qdsp6-objs := msm-dai-q6.o msm-pcm-q6.o msm-multi-ch-pcm-q6.o msm-pcm-routing.o msm-dai-fe.o msm-compr-q6.o msm-dai-stub.o
-#HTC_AUD_LOWL_START
-snd-soc-qdsp6-objs := msm-dai-q6.o msm-pcm-q6.o msm-multi-ch-pcm-q6.o msm-pcm-routing.o msm-dai-fe.o msm-compr-q6.o msm-dai-stub.o msm-lowlatency-pcm-q6.o
-#HTC_AUD_LOWL_END
+snd-soc-qdsp6-objs := msm-dai-q6.o msm-pcm-q6.o msm-multi-ch-pcm-q6.o msm-pcm-routing.o msm-dai-fe.o msm-compr-q6.o msm-dai-stub.o
 obj-$(CONFIG_SND_SOC_MSM_QDSP6_HDMI_AUDIO) += msm-dai-q6-hdmi.o
 obj-$(CONFIG_SND_SOC_VOICE) += msm-pcm-voice.o msm-pcm-voip.o
 snd-soc-qdsp6-objs += msm-pcm-lpa.o msm-pcm-afe.o
@@ -69,11 +66,12 @@ ifdef CONFIG_ARCH_APQ8064
 ifdef CONFIG_ARCH_APQ8064_M7
 snd-soc-msm8960-objs := apq8064_M7.o mpq8064.o
 else ifdef CONFIG_ARCH_DUMMY
-else ifdef CONFIG_ARCH_DUMMY
+else ifdef CONFIG_ARCH_APQ8064_DLXP
+snd-soc-msm8960-objs := apq8064_DLXP.o mpq8064.o
 else ifdef CONFIG_ARCH_DUMMY
 else ifdef CONFIG_ARCH_DUMMY
 else
-snd-soc-msm8960-objs := apq8064_M7.o mpq8064.o
+snd-soc-msm8960-objs := apq8064.o mpq8064.o
 endif
 obj-$(CONFIG_SND_SOC_MSM8960) += snd-soc-msm8960.o
 else
