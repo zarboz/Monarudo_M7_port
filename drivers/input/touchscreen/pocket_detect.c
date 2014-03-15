@@ -21,7 +21,9 @@
 
 #include <linux/kernel.h>
 #include <linux/module.h>
+#include <linux/init.h>
 #include <linux/err.h>
+#include <linux/input/pocket_detect.h>
 #include <linux/input.h>
 #include <linux/pl_sensor.h>
 
@@ -31,7 +33,7 @@
 int pocket_detect = POCKET_DETECT_DEFAULT;
 
 /* Are we inside a pocket, or is our sensor being blocked? 1 = Blocked : 0 = Clear */
-int pocket_mode = 0;
+static int pocket_mode = 0;
 
 /* Read cmdline for pocket_detect */
 static int __init read_pocket_detect_cmdline(char *pd)
