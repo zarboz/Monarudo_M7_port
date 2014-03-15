@@ -123,20 +123,20 @@ static int __init read_s2w_cmdline(char *s2w)
 __setup("s2w=", read_s2w_cmdline);
 
 /* Read cmdline for s2w_s2sonly */
-static int __init read_s2w_s2sonly_cmdline(char *s2sonly)
+static int __init read_s2w_s2sonly_cmdline(char *s2s)
 {
-	if (strcmp(s2sonly, "1") == 0) {
-		pr_info("[cmdline_s2sonly]: Sweep2Sleep only enabled. | s2sonly='%s'\n", s2sonly);
+	if (strcmp(s2s, "1") == 0) {
+		pr_info("[cmdline_s2sonly]: Sweep2Sleep only enabled. | s2s='%s'\n", s2s);
 		s2w_s2sonly = 1;
-	} else if (strcmp(s2sonly, "0") == 0) {
-		pr_info("[cmdline_s2sonly: Sweep2Sleep only disabled. | s2sonly='%s'\n", s2sonly);
+	} else if (strcmp(s2s, "0") == 0) {
+		pr_info("[cmdline_s2sonly: Sweep2Sleep only disabled. | s2s='%s'\n", s2s);
 		s2w_s2sonly = 0;
         } else {
-		pr_info("[cmdline_s2sonly]: No valid input found. Going with default: | s2sonly='%u'\n", s2w_s2sonly);
+		pr_info("[cmdline_s2sonly]: No valid input found. Going with default: | s2s='%u'\n", s2w_s2sonly);
 	}
 	return 1;
 }
-__setup("s2sonly=", read_s2w_s2sonly_cmdline);
+__setup("s2s=", read_s2w_s2sonly_cmdline);
 
 /* PowerKey work func */
 static void sweep2wake_presspwr(struct work_struct * sweep2wake_presspwr_work) {
@@ -184,7 +184,7 @@ static void detect_sweep2wake(int x, int y, bool st)
                 x, y, (single_touch) ? "true" : "false");
 #endif
 	//left->right
-	if ((single_touch) && (scr_suspended == true) && (s2w_switch > 0 && s2w_s2sonly < 1)) {
+	if ((single_touch) && (scr_suspended == true) && (s2w_switch > 0 && !s2w_s2sonly)) {
 		prevx = 0;
 		nextx = S2W_X_B1;
 		if ((barrier[0] == true) ||
