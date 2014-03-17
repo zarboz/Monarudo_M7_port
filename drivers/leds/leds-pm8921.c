@@ -84,7 +84,24 @@ static int current_blink = 0;
 //static int lut_coefficient = 100;
 //static int dutys_array[64];
 
-static int blink_buttons = 1;
+static int blink_buttons = 0;
+
+/* Read cmdline for blink_buttons */
+static int __init read_blink_buttons_cmdline(char *bb)
+{
+	if (strcmp(bb, "1") == 0) {
+		pr_info("[cmdline_blink]: Enabled. | blink_buttons='%s'\n", bb);
+                blink_buttons = 1;
+	} else if (strcmp(bb, "0") == 0) {
+		pr_info("[cmdline_blink]: Disabled. | blink_buttons='%s'\n", bb);
+		blink_buttons = 0;
+	} else {
+		pr_info("[cmdline_blink]: No valid input found. Going with default: | blink_buttons='%u'\n", blink_buttons);
+	}
+	return 1;
+}
+
+__setup("blink_buttons=", read_blink_buttons_cmdline);
 
 u8 pm8xxxx_led_pwm_mode(int flag)
 {
@@ -446,23 +463,23 @@ static ssize_t pm8xxx_blink_buttons_show(struct device *dev,
 					struct device_attribute *attr,
 					char *buf)
 {
-	return sprintf(buf, "%d\n", blink_buttons);
+	size_t count = 0;
+	count += sprintf(buf, "%d\n", blink_buttons);
+	return count;
 }
 
 static ssize_t pm8xxx_blink_buttons_store(struct device *dev,
 				       struct device_attribute *attr,
 				       const char *buf, size_t count)
 {
-	int val;
-	val = -1;
-	sscanf(buf, "%u", &val);
-	if (val < 0 || val > 1)
-		return -EINVAL;
-	blink_buttons = val;
+	if (buf[0] >= '0' && buf[0] <= '1' && buf[1] == '\n')
+                if (blink_buttons != buf[0] - '0')
+		        blink_buttons = buf[0] - '0';
 	return count;
 }
 
-static DEVICE_ATTR(blink_buttons, 0644, pm8xxx_blink_buttons_show, pm8xxx_blink_buttons_store);
+static DEVICE_ATTR(blink_buttons, 0644, 
+        pm8xxx_blink_buttons_show, pm8xxx_blink_buttons_store);
 
 
 static ssize_t pm8xxx_led_blink_show(struct device *dev,
