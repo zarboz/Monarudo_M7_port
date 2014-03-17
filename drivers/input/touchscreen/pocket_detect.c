@@ -23,6 +23,7 @@
 #include <linux/module.h>
 #include <linux/err.h>
 #include <linux/input.h>
+#include <linux/input/pocket_detect.h>
 #include <linux/pl_sensor.h>
 
 #define POCKET_DETECT_DEFAULT 1
