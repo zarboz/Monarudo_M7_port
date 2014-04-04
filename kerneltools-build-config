@@ -1,16 +1,16 @@
 CROSS_COMPILE=~/android/toolchains/arm-cortex_a15-linux-gnueabi/bin/arm-cortex_a15-linux-gnueabi-
 HOST_CC=gcc
 LOCAL_BUILD_DIR=dna
-TARGET_DIR=~/android/kernel/dna/out
+TARGET_DIR=~/android/multirom/out
 SYSTEM_PARTITION="/dev/block/mmcblk0p32"
 DEFCONFIG=torrented_defconfig
 
-FLASH_BOOT='write_raw_image("/tmp/boot.img", "boot")'
+FLASH_BOOT=''
 
 # ----
 
 N_CORES=4
-VERSION=torrented-beta-0.3.8
+VERSION=torrented-khbp-sense-0.4.5
 # ----
 
 BANNER=`cat <<EOF
